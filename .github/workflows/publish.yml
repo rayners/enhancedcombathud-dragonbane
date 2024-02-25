@@ -34,7 +34,7 @@ jobs:
 
      - name: Create zip archive
        working-directory: dist
-       run: zip -r ./module.zip README.md LICENSE module.json style.css scripts/ templates/ languages/
+       run: zip -r ./module.zip README.md LICENSE module.json scripts/ templates/ languages/
 
      - name: Update release with files
        id: create_version_release
