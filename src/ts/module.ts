@@ -3,8 +3,6 @@ import { id as MODULE_NAME } from "../module.json";
 
 declare var game: any;
 
-// const MODULE_NAME = "enhancedcombathud-dragonbane";
-
 Hooks.on("argonInit", (CoreHUD) => {
   const ARGON = CoreHUD.ARGON;
 
@@ -61,8 +59,6 @@ Hooks.on("argonInit", (CoreHUD) => {
 
   class DragonbaneWeaponSets extends ARGON.WeaponSets {
     // async _onSetChange({ sets, active }) {
-    //   return;
-    // }
     async _onSetChange() {}
   }
 
@@ -113,14 +109,6 @@ Hooks.on("argonInit", (CoreHUD) => {
     }
   }
 
-  //   // async _getPanel() {
-  //   //   return spells
-  //   //   // return new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanel({
-  //   //   //   accordionPanelCategories: this.spells.map(spell => new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({ label: spell.name, buttons: [new DragonbaneSpellButton(spell)] }))
-  //   //   // });
-  //   // }
-  // }
-
   class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     constructor(...args) {
       super(...args);
@@ -129,13 +117,6 @@ Hooks.on("argonInit", (CoreHUD) => {
     get classes() {
       return ["feature-element", "dragonbane-feature-element", "sheet-table-data"];
     }
-    // get label() {
-    //   return this.spell.name;
-    // }
-    // get icon() {
-    //   return this.spell.img;
-    // }
-
     
     get useTargetPicker() {
       return false;
@@ -172,15 +153,21 @@ Hooks.on("argonInit", (CoreHUD) => {
     get classes() {
       return ["actions-container", "dragonbane-actions-container"];
     }
+
     get label() {
       return "Defense";
     }
+
     get maxActions() {
       return 1;
     }
 
     async _getButtons() {
       return [new DragonbaneEvadeButton(), new DragonbaneParryButton()];
+    }
+
+    get colorScheme() {
+      return 3;
     }
   }
 
@@ -202,26 +189,40 @@ Hooks.on("argonInit", (CoreHUD) => {
   }
 
   class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
+    constructor() {
+      super();
+
+      // select for highest skill+durability
+      this._parryWeapon = this.actor.getEquippedWeapons()
+        .filter(w => !w.hasWeaponFeature('noparry'))
+        .sort((a,b) => (b.system.skill.value + b.system.durability) - (a.system.skill.value + a.system.durability))[0];
+    }
+
     get classes() {
       return ["action-element", "dragonbane-action-element"];
     }
     get label() {
-      return "Parry";
+      return `Parry (${this._parryWeapon?.name})`;
     }
 
     get icon() {
       return "modules/enhancedcombathud/icons/svg/crossed-swords.svg";
     }
+
+    async _renderInner() {
+      await super._renderInner();
+      if (!this._parryWeapon) {
+        this.element.style.display = "none";
+        return;
+      }
+    }
+
+    async _onLeftClick() {
+      // not sure if there is a way to default it to a parry
+      // (doesn't seem to be one... yet)
+      game.dragonbane.rollItem(this._parryWeapon.name, this._parryWeapon.type);
+    }
   }
-  // class DragonbaneDefensePanel extends ARGON.MAIN.ButtonPanel {
-  //   get maxActions() { return 1; } // monsters get more
-
-  //   get label() { return "Defense"; }
-
-  //   async _getButtons() {
-  //     return []; //new ARGON.MAIN.BUTTONS.ButtonPanelButton({ label: 'Dodge', icon: '' })];
-  //   }
-  // }
 
   class DragonbaneAttackPanel extends ARGON.MAIN.ActionPanel {
     get classes() {
@@ -277,7 +278,7 @@ Hooks.on("argonInit", (CoreHUD) => {
 
     async _getButtons() {
       return [
-        new DragonbaneDashButton(),
+        // new DragonbaneDashButton(), // not really implemented yet. Just double movement for a round?
         new ARGON.MAIN.BUTTONS.SplitButton(
           new DragonbaneSkillButton({
             skillName: "Healing",
@@ -377,14 +378,14 @@ Hooks.on("argonInit", (CoreHUD) => {
     }
   }
 
-  class DragonbaneDashButton extends ARGON.MAIN.BUTTONS.ActionButton {
-    get icon() {
-      return "modules/enhancedcombathud/icons/svg/run.svg";
-    }
-    get label() {
-      return "Dash";
-    }
-  }
+  // class DragonbaneDashButton extends ARGON.MAIN.BUTTONS.ActionButton {
+  //   get icon() {
+  //     return "modules/enhancedcombathud/icons/svg/run.svg";
+  //   }
+  //   get label() {
+  //     return "Dash";
+  //   }
+  // }
 
   class DragonbaneSkillButton extends ARGON.MAIN.BUTTONS.ActionButton {
     constructor({ skillName, iconName, label }) {
