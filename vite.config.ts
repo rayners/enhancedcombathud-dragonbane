@@ -69,8 +69,8 @@ export default defineConfig({
        { src: "src/templates", dest: "dist" },
        { src: "src/languages", dest: "dist" },
        { src: "src/icons", dest: "dist" },
-       { src: "src/README.md", dest: "dist" },
-       { src: "src/LICENSE", dest: "dist" }
+       { src: "README.md", dest: "dist" },
+       { src: "LICENSE", dest: "dist" }
      ],
      hook: "writeBundle",
    }),
