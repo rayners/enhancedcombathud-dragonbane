@@ -48,11 +48,5 @@
   "manifest": "MANIFEST",
   "download": "DOWNLOAD",
   "license": "LICENSE",
-  "readme": "README.md",
-  "media": [
-    {
-      "type": "icon",
-      "url": "https://avatars.githubusercontent.com/u/68707?v=4"
-    }
-  ]
+  "readme": "README.md"
 }
