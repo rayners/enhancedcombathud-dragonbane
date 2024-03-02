@@ -1,7 +1,7 @@
 import "../styles/module.scss";
 import { id as MODULE_NAME } from "../module.json";
 
-declare var game: any;
+declare const game: any;
 
 Hooks.once("init", () => {
   game.settings.register(MODULE_NAME, "includeUnpreparedSpells", {
