@@ -3,6 +3,16 @@ import { id as MODULE_NAME } from "../module.json";
 
 declare var game: any;
 
+Hooks.once("init", () => {
+  game.settings.register(MODULE_NAME, "includeUnpreparedSpells", {
+    name: "Include Unprepared Spells",
+    hint: "Include unprepared spells in spells list",
+    config: true,
+    type: Boolean,
+    default: false
+  });
+});
+
 Hooks.on("argonInit", (CoreHUD) => {
   const ARGON = CoreHUD.ARGON;
 
@@ -88,7 +98,10 @@ Hooks.on("argonInit", (CoreHUD) => {
       if (!this.actor.hasSpells) {
         return [];
       }
-      const spells = this.actor.items.filter((i) => i.type == "spell");
+      const includeUnpreparedSpells = game.settings.get(MODULE_NAME, "includeUnpreparedSpells");
+      const spells = this.actor.items
+        .filter((i) => i.type == "spell")
+        .filter(s => s.system.memorized || includeUnpreparedSpells);
 
       return [new DragonbaneSpellsButton(spells)];
     }
