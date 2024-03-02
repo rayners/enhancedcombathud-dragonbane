@@ -400,9 +400,11 @@ Hooks.on("argonInit", (CoreHUD) => {
     }
 
     async _getPanel() {
-      const abilities = this.actor.items.filter(
-        (item) => item.type === "ability",
-      );
+      const abilities = this.actor.items
+        .filter(item => item.type === "ability")
+        .filter(item => item.system.wp);
+
+      console.log(abilities);
       return new DragonbaneAbilityButtonPanel({
         buttons: abilities.map((item) => new DragonbaneAbilityButton({ item })),
       });
