@@ -404,7 +404,6 @@ Hooks.on("argonInit", (CoreHUD) => {
         .filter(item => item.type === "ability")
         .filter(item => item.system.wp);
 
-      console.log(abilities);
       return new DragonbaneAbilityButtonPanel({
         buttons: abilities.map((item) => new DragonbaneAbilityButton({ item })),
       });
