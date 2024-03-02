@@ -14,6 +14,10 @@ Hooks.on("argonInit", (CoreHUD) => {
     get description() {
       const { system } = this.actor;
 
+      if (this.actor.type !== "character") {
+        return null;
+      }
+
       return `${system.kin.name} ${system.profession.name}`;
     }
 
@@ -23,12 +27,18 @@ Hooks.on("argonInit", (CoreHUD) => {
         [{ text: "HP" }, // game.i18n.localize('DoD.secondaryAttributeTypes.hitPoints') },
           { text: system.hitPoints.value },
           { text: "/" },
-          { text: system.hitPoints.max }],
-        [{ text: "WP" }, // game.i18n.localize('DoD.secondaryAttributeTypes.willPoints') },
-          { text: system.willPoints.value },
-          { text: "/" },
-          { text: system.willPoints.max }],
+          { text: system.hitPoints.max }]
       ];
+
+      if (system.willPoints?.max) { // if they have any WP
+        Blocks.push(
+          [{ text: "WP" }, // game.i18n.localize('DoD.secondaryAttributeTypes.willPoints') },
+            { text: system.willPoints.value },
+            { text: "/" },
+            { text: system.willPoints.max }]
+        );
+      }
+
       return Blocks;
     }
   }
@@ -147,6 +157,50 @@ Hooks.on("argonInit", (CoreHUD) => {
       this.element.dataset.itemId = this.item.id;
     }
     
+    }
+
+  class DragonbaneMonsterAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
+    get classes() {
+      return ["action-element", "dragonbane-action-element"];
+    }
+
+    get label() {
+      return "Monster Attack";
+    }
+
+    get icon() {
+      return "systems/dragonbane/art/ui/sword.webp";
+    }
+
+    async _onLeftClick(event) {
+      this.actor.sheet._onMonsterAttack({
+        type: "click",
+        preventDefault: () => event.preventDefault(),
+        shiftKey: event.shiftKey,
+        ctrlKey: event.ctrlKey
+      });
+    }
+  }
+
+  class DragonbaneMonsterDefendButton extends ARGON.MAIN.BUTTONS.ActionButton {
+    get classes() {
+      return ["action-element", "dragonbane-action-element"];
+    }
+
+    get label() {
+      return "Monster Defend";
+    }
+
+    get icon() {
+      return "systems/dragonbane/art/ui/shield.webp";
+    }
+
+    async _onLeftClick(event) {
+      this.actor.sheet._onMonsterDefend({
+        type: 'click',
+        preventDefault: () => event.preventDefault()
+      });
+    }
   }
 
   class DragonbaneDefensePanel extends ARGON.MAIN.ActionPanel {
@@ -163,6 +217,9 @@ Hooks.on("argonInit", (CoreHUD) => {
     }
 
     async _getButtons() {
+      if (this.actor.type === "monster") {
+        return [new DragonbaneMonsterDefendButton()];
+      }
       return [new DragonbaneEvadeButton(), new DragonbaneParryButton()];
     }
 
@@ -277,23 +334,36 @@ Hooks.on("argonInit", (CoreHUD) => {
     }
 
     async _getButtons() {
-      return [
-        // new DragonbaneDashButton(), // not really implemented yet. Just double movement for a round?
-        new ARGON.MAIN.BUTTONS.SplitButton(
-          new DragonbaneSkillButton({
-            skillName: "Healing",
-            label: "First Aid",
-            iconName: "bandage-roll.svg",
-          }),
-          new DragonbaneSkillButton({
-            skillName: "Persuasion",
-            label: "Rally",
-            iconName: "bugle-call.svg",
-          }),
-        ),
-        new DragonbaneHeroicAbilitiesButton(),
-        new DragonbaneRoundRestButton(),
-      ];
+      const Buttons: any[] = [];
+
+      if (!this.actor.isMonster) {
+        Buttons.push(
+          // new DragonbaneDashButton(), // not really implemented yet. Just double movement for a round?
+          new ARGON.MAIN.BUTTONS.SplitButton(
+            new DragonbaneSkillButton({
+              skillName: "Healing",
+              label: "First Aid",
+              iconName: "bandage-roll.svg",
+            }),
+            new DragonbaneSkillButton({
+              skillName: "Persuasion",
+              label: "Rally",
+              iconName: "bugle-call.svg",
+            }),
+          )
+        );
+      } else {
+        Buttons.push(new DragonbaneMonsterAttackButton());
+      }
+
+      if (this.actor.system.willPoints?.max) {
+        Buttons.push(
+          new DragonbaneHeroicAbilitiesButton(),
+          new DragonbaneRoundRestButton()
+        );
+      }
+
+      return Buttons;
     }
   }
 
@@ -415,6 +485,7 @@ Hooks.on("argonInit", (CoreHUD) => {
     get classes() {
       return ["movement-hud", "dragonbane-movement-hud"];
     }
+
     get visible() {
       return !game.combat?.started;
     }
@@ -448,5 +519,5 @@ Hooks.on("argonInit", (CoreHUD) => {
   CoreHUD.defineMovementHud(DragonbaneMovementHud);
   CoreHUD.defineWeaponSets(DragonbaneWeaponSets);
   CoreHUD.defineButtonHud(DragonbaneButtonHud);
-  CoreHUD.defineSupportedActorTypes(["character"]); //, "npc", "monster"]);
+  CoreHUD.defineSupportedActorTypes(["character", "npc", "monster"]);
 });
