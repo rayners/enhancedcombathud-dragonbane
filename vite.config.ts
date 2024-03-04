@@ -49,9 +49,6 @@ export default defineConfig({
    rollupOptions: {
      input: "src/ts/module.ts",
      output: {
-       //dir: "dist/scripts",
-       //file: "module.js",
-       //file: "dist/scripts/module.js",
        entryFileNames: 'scripts/[name].js',
        format: "es",
      },
@@ -65,7 +62,6 @@ export default defineConfig({
    }),
    copy({
      targets: [
-       // { src: "src/module.json", dest: "dist" },
        { src: "src/templates", dest: "dist" },
        { src: "src/languages", dest: "dist" },
        { src: "src/icons", dest: "dist" },
