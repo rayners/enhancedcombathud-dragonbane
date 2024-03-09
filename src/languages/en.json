@@ -20,7 +20,9 @@
     "buttons": {
       "heroic-abilities": "Heroic Abilities",
       "round-rest": "Round Rest",
-      "spells": "Spells"
+      "spells": "Spells",
+      "shift-rest": "Shift Rest",
+      "stretch-rest": "Stretch Rest"
     }
   }
 }
