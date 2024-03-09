@@ -12,7 +12,9 @@ export default class DragonbaneRestHud extends ARGON.ButtonHud {
   async _getButtons() {
     return [
       {
-        label: game.i18n.localize('enhancedcombathud-dragonbane.buttons.stretch-rest'),
+        label: game.i18n.localize(
+          "enhancedcombathud-dragonbane.buttons.stretch-rest",
+        ),
         // have to account for _not_ being able to rest for a stretch
         onClick: (event) =>
           this.actor.system.canRestStretch &&
@@ -20,7 +22,9 @@ export default class DragonbaneRestHud extends ARGON.ButtonHud {
         icon: "fas fa-chair",
       },
       {
-        label: game.i18n.localize('enhancedcombathud-dragonbane.buttons.shift-rest'),
+        label: game.i18n.localize(
+          "enhancedcombathud-dragonbane.buttons.shift-rest",
+        ),
         onClick: (event) => this.actor.sheet._onRestShift(event),
         icon: "fas fa-bed",
       },
