@@ -6,7 +6,9 @@ class DragonbaneMonsterDefendButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   get label() {
-    return "Monster Defend";
+    return game.i18n.localize(
+      "enhancedcombathud-dragonbane.actions.monster-defend",
+    );
   }
 
   get icon() {
@@ -15,8 +17,8 @@ class DragonbaneMonsterDefendButton extends ARGON.MAIN.BUTTONS.ActionButton {
 
   async _onLeftClick(event) {
     this.actor.sheet._onMonsterDefend({
-      type: 'click',
-      preventDefault: () => event.preventDefault()
+      type: "click",
+      preventDefault: () => event.preventDefault(),
     });
   }
 }
@@ -26,7 +28,7 @@ class DragonbaneEvadeButton extends ARGON.MAIN.BUTTONS.ActionButton {
     return ["action-element", "dragonbane-action-element"];
   }
   get label() {
-    return "Dodge";
+    return game.i18n.localize("enhancedcombathud-dragonbane.actions.dodge");
   }
 
   get icon() {
@@ -34,7 +36,7 @@ class DragonbaneEvadeButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   async _onLeftClick() {
-    return game.dragonbane.rollItem('Evade', 'skill');
+    return game.dragonbane.rollItem("Evade", "skill");
   }
 }
 
@@ -43,16 +45,22 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
     super();
 
     // select for highest skill+durability
-    this._parryWeapon = this.actor.getEquippedWeapons()
-      .filter(w => !w.hasWeaponFeature('noparry'))
-      .sort((a,b) => (b.system.skill.value + b.system.durability) - (a.system.skill.value + a.system.durability))[0];
+    this._parryWeapon = this.actor
+      .getEquippedWeapons()
+      .filter((w) => !w.hasWeaponFeature("noparry"))
+      .sort(
+        (a, b) =>
+          b.system.skill.value +
+          b.system.durability -
+          (a.system.skill.value + a.system.durability),
+      )[0];
   }
 
   get classes() {
     return ["action-element", "dragonbane-action-element"];
   }
   get label() {
-    return `Parry (${this._parryWeapon?.name})`;
+    return `${game.i18n.localize("enhancedcombathud-dragonbane.actions.parry")} (${this._parryWeapon?.name})`;
   }
 
   get icon() {
@@ -80,7 +88,7 @@ export default class DragonbaneDefensePanel extends ARGON.MAIN.ActionPanel {
   }
 
   get label() {
-    return "Defense";
+    return game.i18n.localize("enhancedcombathud-dragonbane.panels.defense");
   }
 
   get maxActions() {

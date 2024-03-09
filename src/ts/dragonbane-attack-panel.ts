@@ -27,7 +27,7 @@ export default class DragonbaneAttackPanel extends ARGON.MAIN.ActionPanel {
     return ["actions-container", "dragonbane-actions-container"];
   }
   get label() {
-    return "Attack";
+    return game.i18n.localize("enhancedcombathud-dragonbane.panels.attack");
   }
 
   get maxActions() {

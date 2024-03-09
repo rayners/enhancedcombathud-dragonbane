@@ -6,10 +6,10 @@ export function registerSettings(): void {
     hint: "Include unprepared spells in spells list",
     config: true,
     type: Boolean,
-    default: false
+    default: false,
   });
 }
 
 export default {
-  registerSettings
+  registerSettings,
 };

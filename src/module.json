@@ -34,9 +34,8 @@
       }
     ]
   },
-  "esmodules": [
-    "scripts/module.js"
-  ],
+  "styles": ["styles/module.css"],
+  "esmodules": ["scripts/module.js"],
   "languages": [
     {
       "lang": "en",

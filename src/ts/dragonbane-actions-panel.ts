@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from '../module.json';
+import { id as MODULE_NAME } from "../module.json";
 
 const ARGON = CONFIG.ARGON;
 class DragonbaneMonsterAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
@@ -7,7 +7,9 @@ class DragonbaneMonsterAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   get label() {
-    return "Monster Attack";
+    return game.i18n.localize(
+      "enhancedcombathud-dragonbane.actions.monster-attack",
+    );
   }
 
   get icon() {
@@ -19,33 +21,36 @@ class DragonbaneMonsterAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
       type: "click",
       preventDefault: () => event.preventDefault(),
       shiftKey: event.shiftKey,
-      ctrlKey: event.ctrlKey
+      ctrlKey: event.ctrlKey,
     });
   }
 }
 class DragonbaneHeroicAbilitiesButton extends ARGON.MAIN.BUTTONS
   .ButtonPanelButton {
-    get label() {
-      return "Heroic Abilities";
-    }
-    get icon() {
-      return `modules/${MODULE_NAME}/icons/skills.svg`;
-    }
-
-    async _getPanel() {
-      const abilities = this.actor.items
-        .filter(item => item.type === "ability")
-        .filter(item => item.system.wp);
-
-      return new DragonbaneAbilityButtonPanel({
-        buttons: abilities.map((item) => new DragonbaneAbilityButton({ item })),
-      });
-    }
+  get label() {
+    return game.i18n.localize(
+      "enhancedcombathud-dragonbane.buttons.heroic-abilities",
+    );
+  }
+  get icon() {
+    return `modules/${MODULE_NAME}/icons/skills.svg`;
   }
 
-class DragonbaneAbilityButtonPanel extends ARGON.MAIN.BUTTON_PANELS.ButtonPanel {
+  async _getPanel() {
+    const abilities = this.actor.items
+      .filter((item) => item.type === "ability")
+      .filter((item) => item.system.wp);
+
+    return new DragonbaneAbilityButtonPanel({
+      buttons: abilities.map((item) => new DragonbaneAbilityButton({ item })),
+    });
+  }
+}
+
+class DragonbaneAbilityButtonPanel extends ARGON.MAIN.BUTTON_PANELS
+  .ButtonPanel {
   constructor(...args) {
-    super(...args)
+    super(...args);
   }
 
   get classes() {
@@ -61,7 +66,7 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
   get classes() {
     return ["feature-element", "sheet-table-data"]; // need the latter to trick the DB code
   }
-    
+
   get label() {
     return this.item.name;
   }
@@ -74,9 +79,9 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
     // a mouseup event instead of the expected left click (per the
     // sheet code)
     this.actor.sheet._onUseItem({
-      type: 'click',
+      type: "click",
       currentTarget: event.currentTarget,
-      preventDefault: () => event.preventDefault()
+      preventDefault: () => event.preventDefault(),
     });
   }
 
@@ -97,10 +102,12 @@ class DragonbaneRoundRestButton extends ARGON.MAIN.BUTTONS.ActionButton {
     return `modules/${MODULE_NAME}/icons/meditation.svg`;
   }
   get label() {
-    return "Round Rest";
+    return game.i18n.localize(
+      "enhancedcombathud-dragonbane.buttons.round-rest",
+    );
   }
 
-  async _onLeftClick(event) {      
+  async _onLeftClick(event) {
     this.actor.system.canRestRound && this.actor.sheet._onRestRound(event);
   }
 }
@@ -138,20 +145,27 @@ class DragonbaneSkillButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 }
 
-export default  class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
+export default class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
   get classes() {
     return ["actions-container", "dragonbane-actions-container"];
   }
 
   get label() {
-    return "Actions";
+    return game.i18n.localize("enhancedcombathud-dragonbane.panels.actions");
   }
+
+  get currentActions() {
+    // they have to be up/alive, or rallied...
+    // How do we determine rallied?
+    return this.actor.system.hitPoints?.value > 0;
+  }
+
   get maxActions() {
     return 1;
   }
 
   async _getButtons() {
-    const Buttons: any[] = [];
+    const Buttons = [];
 
     if (!this.actor.isMonster) {
       Buttons.push(
@@ -159,27 +173,38 @@ export default  class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
         new ARGON.MAIN.BUTTONS.SplitButton(
           new DragonbaneSkillButton({
             skillName: "Healing",
-            label: "First Aid",
+            label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.actions.first-aid",
+            ),
             iconName: "bandage-roll.svg",
           }),
           new DragonbaneSkillButton({
             skillName: "Persuasion",
-            label: "Rally",
+            label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.actions.rally",
+            ),
             iconName: "bugle-call.svg",
           }),
-        )
+        ),
       );
     } else {
       Buttons.push(new DragonbaneMonsterAttackButton());
     }
 
+    // Do they have willpower points to spend/gain?
     if (this.actor.system.willPoints?.max) {
       Buttons.push(
         new DragonbaneHeroicAbilitiesButton(),
-        new DragonbaneRoundRestButton()
+        new DragonbaneRoundRestButton(),
       );
     }
 
     return Buttons;
+  }
+
+  // hacky, but it hides/shows it when the death state changes
+  updateActionUse() {
+    super.updateActionUse();
+    this.updateVisibility();
   }
 }

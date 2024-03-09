@@ -1,2 +1,25 @@
 {
+  "enhancedcombathud-dragonbane": {
+    "panels": {
+      "attack": "Attack",
+      "actions": "Actions",
+      "magic": "Magic",
+      "defense": "Defense",
+      "dying": "Dying"
+    },
+    "actions": {
+      "first-aid": "First Aid",
+      "rally": "Rally",
+      "rally-self": "Rally (Self)",
+      "parry": "Parry",
+      "dodge": "Dodge",
+      "monster-attacK": "Monster Attack",
+      "monster-defend": "Monster Defend"
+    },
+    "buttons": {
+      "heroic-abilities": "Heroic Abilities",
+      "round-rest": "Round Rest",
+      "spells": "Spells"
+    }
+  }
 }

@@ -1,4 +1,3 @@
-
 const ARGON = CONFIG.ARGON;
 
 export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {

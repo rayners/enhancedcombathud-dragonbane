@@ -8,13 +8,13 @@ interface Dragonbane {
   // Not using any of the commented ones... yet
   // migrateWorld(): void;
   // updateSpells(): void;
-  rollAttribute(actor: Actor, attributeName: string, options?: any): void;
-  rollItem(itemName: string, itemType: string, options?: any): void;
+  rollAttribute(actor: Actor, attributeName: string, options?: object): void;
+  rollItem(itemName: string, itemType: string, options?: object): void;
   // monsterAttack(): void;
   // monsterDefend(): void;
   // drawTreasureCards(): void;
 }
-  
+
 interface DragonbaneGame extends Game {
   dragonbane: Dragonbane;
 }
@@ -24,7 +24,7 @@ declare let game: DragonbaneGame;
 // Also the global declarations for ARGON
 
 interface ArgonCONFIG extends CONFIG {
-  ARGON: any;
+  ARGON: object;
 }
 
 declare let CONFIG: ArgonCONFIG;

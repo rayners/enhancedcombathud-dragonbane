@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from '../module.json';
+import { id as MODULE_NAME } from "../module.json";
 
 const ARGON = CONFIG.ARGON;
 
@@ -12,17 +12,21 @@ class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS.ButtonPanelButton {
   }
 
   get label() {
-    return "Spells";
+    return game.i18n.localize("enhancedcombathud-dragonbane.buttons.spells");
   }
   get icon() {
     return "modules/enhancedcombathud/icons/svg/spell-book.svg";
   }
 
-  get id() { return 'spells-button'; }
+  get id() {
+    return "spells-button";
+  }
 
   async _getPanel() {
     return new ARGON.MAIN.BUTTON_PANELS.ButtonPanel({
-      buttons: this.spells.map((item) => new DragonbaneSpellButton({ id: this.id, item })),
+      buttons: this.spells.map(
+        (item) => new DragonbaneSpellButton({ id: this.id, item }),
+      ),
     });
   }
 }
@@ -33,9 +37,13 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
   }
 
   get classes() {
-    return ["feature-element", "dragonbane-feature-element", "sheet-table-data"];
+    return [
+      "feature-element",
+      "dragonbane-feature-element",
+      "sheet-table-data",
+    ];
   }
-    
+
   get useTargetPicker() {
     return false;
   }
@@ -52,9 +60,9 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     // a mouseup event instead of the expected left click (per the
     // sheet code)
     this.actor.sheet._onSkillRoll({
-      type: 'click',
+      type: "click",
       currentTarget: event.currentTarget,
-      preventDefault: () => event.preventDefault()
+      preventDefault: () => event.preventDefault(),
     });
   }
 
@@ -64,7 +72,6 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     // embed the item id in the element for the left click handler to use
     this.element.dataset.itemId = this.item.id;
   }
-    
 }
 
 export default class DragonbaneMagicPanel extends ARGON.MAIN.ActionPanel {
@@ -72,22 +79,25 @@ export default class DragonbaneMagicPanel extends ARGON.MAIN.ActionPanel {
     return ["actions-container", "dragonbane-actions-container"];
   }
   get label() {
-    return "Magic";
+    return game.i18n.localize("enhancedcombathud-dragonbane.panels.magic");
   }
-  
+
   get maxActions() {
     return this.actor.hasSpells ? 1 : null;
   }
-  
+
   async _getButtons() {
     if (!this.actor.hasSpells) {
       return [];
     }
-    const includeUnpreparedSpells = game.settings.get(MODULE_NAME, "includeUnpreparedSpells");
+    const includeUnpreparedSpells = game.settings.get(
+      MODULE_NAME,
+      "includeUnpreparedSpells",
+    );
     const spells = this.actor.items
       .filter((i) => i.type == "spell")
-      .filter(s => s.system.memorized || includeUnpreparedSpells);
-    
+      .filter((s) => s.system.memorized || includeUnpreparedSpells);
+
     return [new DragonbaneSpellsButton(spells)];
   }
 }

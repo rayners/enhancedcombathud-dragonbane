@@ -14,7 +14,9 @@ export default class DragonbaneRestHud extends ARGON.ButtonHud {
       {
         label: "Stretch Rest",
         // have to account for _not_ being able to rest for a stretch
-        onClick: (event) => this.actor.system.canRestStretch && this.actor.sheet._onRestStretch(event),
+        onClick: (event) =>
+          this.actor.system.canRestStretch &&
+          this.actor.sheet._onRestStretch(event),
         icon: "fas fa-chair",
       },
       {
