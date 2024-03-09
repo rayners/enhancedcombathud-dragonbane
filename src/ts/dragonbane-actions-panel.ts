@@ -165,7 +165,7 @@ export default class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
   }
 
   async _getButtons() {
-    const Buttons = [];
+    const Buttons: any[] = [];
 
     if (!this.actor.isMonster) {
       Buttons.push(

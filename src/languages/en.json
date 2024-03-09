@@ -13,8 +13,9 @@
       "rally-self": "Rally (Self)",
       "parry": "Parry",
       "dodge": "Dodge",
-      "monster-attacK": "Monster Attack",
-      "monster-defend": "Monster Defend"
+      "monster-attack": "Monster Attack",
+      "monster-defend": "Monster Defend",
+      "death-roll": "Death Roll"
     },
     "buttons": {
       "heroic-abilities": "Heroic Abilities",

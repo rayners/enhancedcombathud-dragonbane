@@ -16,6 +16,34 @@ export default class DragonbanePortraitPanel extends ARGON.PORTRAIT
     return `${system.kin.name} ${system.profession.name}`;
   }
 
+  async _onDeathSave(event) {
+    this.actor.sheet._onDeathRoll(event);
+  }
+
+  get isDying() {
+    if (this.actor.type === "character") {
+      return this.actor.system.hitPoints.value === 0;
+    } else {
+      return false;
+    }
+  }
+
+  get successes() {
+    if (this.actor.type === "character") {
+      return this.actor.system.deathRolls.successes;
+    } else {
+      return 0;
+    }
+  }
+
+  get failures() {
+    if (this.actor.type === "character") {
+      return this.actor.system.deathRolls.failures;
+    } else {
+      return 0;
+    }
+  }
+
   async getStatBlocks() {
     const { system } = this.actor;
     const Blocks = [

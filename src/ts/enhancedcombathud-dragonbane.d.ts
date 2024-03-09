@@ -24,7 +24,7 @@ declare let game: DragonbaneGame;
 // Also the global declarations for ARGON
 
 interface ArgonCONFIG extends CONFIG {
-  ARGON: object;
+  ARGON: any;
 }
 
 declare let CONFIG: ArgonCONFIG;
