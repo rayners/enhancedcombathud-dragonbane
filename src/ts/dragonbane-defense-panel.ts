@@ -39,7 +39,7 @@ class DragonbaneEvadeButton extends ARGON.MAIN.BUTTONS.ActionButton {
 
   async _onLeftClick() {
     return game.dragonbane.rollItem(
-      game.settings.get(MODULE_NAME, "skillNameEvade") || "Evade",
+      (game.settings.get(MODULE_NAME, "skillNameEvade") as string) || "Evade",
       "skill",
     );
   }
