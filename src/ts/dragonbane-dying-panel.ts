@@ -1,3 +1,5 @@
+import { id as MODULE_NAME } from "../module.json";
+
 const ARGON = CONFIG.ARGON;
 
 class DragonbaneRallySelfButton extends ARGON.MAIN.BUTTONS.ActionButton {
@@ -14,7 +16,21 @@ class DragonbaneRallySelfButton extends ARGON.MAIN.BUTTONS.ActionButton {
   async _onLeftClick(event) {
     // Have to go through the character sheet for now
     // game.dragonbane.rollAttribute(this.actor, 'WIL', { manualBanes: 1 });
-    this.actor.sheet._onAttributeRoll(event);
+
+    // little hacky, but we need to change the behavior based on the version of the system
+    // since the newer version of this code won't prompt the user for a bane
+    if (foundry.utils.isNewerVersion((game.system as any).version, "1.8.1")) {
+      game.dragonbane.rollAttribute(this.actor, "WIL", {
+        banes: [
+          {
+            source: game.i18n.localize(`${MODULE_NAME}.actions.rally-self`),
+            value: true,
+          },
+        ],
+      });
+    } else {
+      this.actor.sheet._onAttributeRoll(event);
+    }
   }
 
   get visible() {
