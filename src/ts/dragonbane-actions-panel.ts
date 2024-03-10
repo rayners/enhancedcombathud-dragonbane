@@ -141,7 +141,13 @@ class DragonbaneSkillButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   async _onLeftClick() {
-    game.dragonbane.rollItem(this.skillName, "skill");
+    // use the configured skill name
+    // or fallback if somehow it's not set to anything
+    game.dragonbane.rollItem(
+      game.settings.get(MODULE_NAME, `skillName${this.skillName}`) ||
+        this.skillName,
+      "skill",
+    );
   }
 }
 
@@ -165,7 +171,7 @@ export default class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
   }
 
   async _getButtons() {
-    const Buttons: any[] = [];
+    const Buttons: Array<any> = [];
 
     if (!this.actor.isMonster) {
       Buttons.push(

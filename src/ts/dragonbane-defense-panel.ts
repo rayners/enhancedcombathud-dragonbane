@@ -1,3 +1,5 @@
+import { id as MODULE_NAME } from "../module.json";
+
 const ARGON = CONFIG.ARGON;
 
 class DragonbaneMonsterDefendButton extends ARGON.MAIN.BUTTONS.ActionButton {
@@ -36,7 +38,10 @@ class DragonbaneEvadeButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   async _onLeftClick() {
-    return game.dragonbane.rollItem("Evade", "skill");
+    return game.dragonbane.rollItem(
+      game.settings.get(MODULE_NAME, "skillNameEvade") as string,
+      "skill",
+    );
   }
 }
 
