@@ -1,24 +1,22 @@
 const ARGON = CONFIG.ARGON;
 
-class DragonbaneAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
-  constructor(weapon) {
-    super();
-    this.weapon = weapon;
+class DragonbaneWeaponButton extends ARGON.MAIN.BUTTONS.ItemButton {
+  constructor(...args) {
+    super(...args);
   }
 
-  get classes() {
-    return ["action-element", "dragonbane-action-element"];
+  get targets() {
+    return 1;
   }
-
-  get label() {
-    return this.weapon.name;
-  }
-  get icon() {
-    return this.weapon.img;
+  get ranges() {
+    return {
+      normal: this.item.system.calculatedRange,
+      long: null,
+    };
   }
 
   async _onLeftClick() {
-    game.dragonbane.rollItem(this.weapon.name, this.weapon.type);
+    game.dragonbane.rollItem(this.item.name, this.item.type);
   }
 }
 
@@ -36,6 +34,8 @@ export default class DragonbaneAttackPanel extends ARGON.MAIN.ActionPanel {
 
   async _getButtons() {
     const weapons = this.actor.getEquippedWeapons();
-    return weapons.map((w) => new DragonbaneAttackButton(w));
+    return weapons.map(
+      (item) => new DragonbaneWeaponButton({ item, inActionPanel: true }),
+    );
   }
 }

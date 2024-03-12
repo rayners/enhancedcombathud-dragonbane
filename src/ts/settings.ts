@@ -8,6 +8,14 @@ export function registerSettings(): void {
     type: Boolean,
     default: false,
   });
+
+  game.settings.register(MODULE_NAME, "groupSpellsByRank", {
+    name: `${MODULE_NAME}.settings.groupSpellsByRank`,
+    hint: `${MODULE_NAME}.settings.groupSpellsByRankHint`,
+    config: true,
+    type: Boolean,
+    default: true,
+  });
 }
 
 export function registerSkillSettings(): void {

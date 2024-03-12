@@ -3,6 +3,8 @@
     "settings": {
       "includeUnpreparedSpells": "Include Unprepared Spells",
       "includeUnpreparedSpellsHint": "Include unprepared spells in spell list",
+      "groupSpellsByRank": "Group spells by rank",
+      "groupSpellsByRankHint": "",
       "skillNameHealing": "Skill for First Aid button",
       "skillNamePersuasion": "Skill for Rally button",
       "skillNameEvade": "Skill for Dodge button"

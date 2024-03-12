@@ -2,6 +2,8 @@ import { id as MODULE_NAME } from "../module.json";
 
 const ARGON = CONFIG.ARGON;
 
+const spellSort = (a, b) => a.name.localeCompare(b.name);
+
 class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS.ButtonPanelButton {
   constructor(spells) {
     super();
@@ -23,11 +25,35 @@ class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS.ButtonPanelButton {
   }
 
   async _getPanel() {
-    return new ARGON.MAIN.BUTTON_PANELS.ButtonPanel({
-      buttons: this.spells.map(
-        (item) => new DragonbaneSpellButton({ id: this.id, item }),
-      ),
-    });
+    if (game.settings.get(MODULE_NAME, "groupSpellsByRank")) {
+      const spellsByRank = this.spells.reduce((m, spell) => {
+        m[spell.system.rank] ||= [];
+        m[spell.system.rank].push(spell);
+        return m;
+      }, {});
+      const accordionPanelCategories = Object.keys(spellsByRank)
+        .sort()
+        .map(
+          (rank) =>
+            new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({
+              label: `Rank ${rank}`,
+              buttons: spellsByRank[rank]
+                .sort(spellSort)
+                .map((item) => new DragonbaneSpellButton({ item })),
+              uses: () => this.actor.system.willPoints,
+            }),
+        );
+
+      return new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanel({
+        accordionPanelCategories,
+      });
+    } else {
+      return new ARGON.MAIN.BUTTON_PANELS.ButtonPanel({
+        buttons: this.spells.sort(spellSort).map(
+          (item) => new DragonbaneSpellButton({ id: this.id, item }),
+        ),
+      });
+    }
   }
 }
 
@@ -44,8 +70,50 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     ];
   }
 
-  get useTargetPicker() {
-    return false;
+  get targets() {
+    return this.useTargetPicker ? 1 : 0;
+  }
+
+  get ranges() {
+    return {
+      normal: this.item.system.range,
+      long: null,
+    };
+  }
+
+  get hasTooltip() {
+    return true;
+  }
+
+  async getTooltipData() {
+    const details = [{ label: "Range", value: this.item.system.range }];
+    if (this.item.system.damage) {
+      details.push({ label: "Damage", value: this.item.system.damage });
+    }
+    return {
+      title: this.item.name,
+      subtitle: this.item.system.school,
+      description: this.item.system.description,
+      details,
+      properties: [
+        ...(this.item.system.castingTime
+          ? [{ label: this.item.system.castingTime, primary: true }]
+          : []),
+        ...(this.item.system.areaOfEffect !== "none"
+          ? [{ label: this.item.system.areaOfEffect, primary: true }]
+          : []),
+        ...(this.item.system.memorized
+          ? [{ label: "Memorized", secondary: true }]
+          : []),
+        ...(this.item.system.duration
+          ? [{ label: this.item.system.duration, primary: true }]
+          : []),
+        ...this.item.system.requirement
+          .split(/\s*,\s*/)
+          .map((r) => ({ label: r, secondary: true })),
+      ],
+      footerText: `Skill ${this.item.system.skillValue}`,
+    };
   }
 
   async _onLeftClick(event) {
@@ -61,7 +129,7 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     // sheet code)
     this.actor.sheet._onSkillRoll({
       type: "click",
-      currentTarget: event.currentTarget,
+      currentTarget: this.element,
       preventDefault: () => event.preventDefault(),
     });
   }

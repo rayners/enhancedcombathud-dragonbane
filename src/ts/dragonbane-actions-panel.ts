@@ -85,6 +85,23 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
     });
   }
 
+  get hasTooltip() {
+    return true;
+  }
+  async getTooltipData() {
+    return {
+      title: this.item.name,
+      subtitle: "Heroic Ability",
+      description: this.item.system.description,
+      details: [{ label: "WP Cost", value: this.item.system.wp }],
+      properties: [
+        { label: this.item.system.abilityType, primary: true },
+        { label: `WP: ${this.item.system.wp}`, primary: true },
+      ],
+      footerText: this.item.system.requirement,
+    };
+  }
+
   async _renderInner() {
     await super._renderInner();
 
