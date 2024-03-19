@@ -37,7 +37,7 @@ class DragonbaneRallySelfButton extends ARGON.MAIN.BUTTONS.ActionButton {
     return this.actor.system.hitPoints?.value === 0;
   }
 
-  async _renderInner() {
+  override async _renderInner() {
     await super._renderInner();
 
     // embed the item id in the element for the left click handler to use
@@ -67,7 +67,7 @@ export default class DragonbaneDyingActionsPanel extends ARGON.MAIN
   }
 
   // hacky, but it hides/shows it when the death state changes
-  updateActionUse() {
+  override updateActionUse() {
     super.updateActionUse();
     this.updateVisibility();
   }

@@ -1,6 +1,9 @@
 import { id as MODULE_NAME } from "../module.json";
+import { DragonbaneWeaponButton } from "./dragonbane-weapon-button";
+import { DragonbaneSpellsButton } from "./dragonbane-spells-button";
 
 const ARGON = CONFIG.ARGON;
+
 class DragonbaneMonsterAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
   get classes() {
     return ["action-element", "dragonbane-action-element"];
@@ -49,29 +52,21 @@ class DragonbaneHeroicAbilitiesButton extends ARGON.MAIN.BUTTONS
 
 class DragonbaneAbilityButtonPanel extends ARGON.MAIN.BUTTON_PANELS
   .ButtonPanel {
-  constructor(...args) {
-    super(...args);
-  }
-
   get classes() {
     return ["features-container", "dragonbane-features-container"];
   }
 }
 
 class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
-  constructor(...args) {
-    super(...args);
-  }
-
   get classes() {
     return ["feature-element", "sheet-table-data"]; // need the latter to trick the DB code
   }
 
   get label() {
-    return this.item.name;
+    return this.item?.name;
   }
   get icon() {
-    return this.item.img;
+    return this.item?.img;
   }
 
   async _onLeftClick(event) {
@@ -102,7 +97,7 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
     };
   }
 
-  async _renderInner() {
+  override async _renderInner() {
     await super._renderInner();
 
     // embed the item id in the element for the left click handler to use
@@ -139,6 +134,10 @@ class DragonbaneRoundRestButton extends ARGON.MAIN.BUTTONS.ActionButton {
 // }
 
 class DragonbaneSkillButton extends ARGON.MAIN.BUTTONS.ActionButton {
+  _icon: string;
+  _label: string;
+  skillName: string;
+
   constructor({ skillName, iconName, label }) {
     super();
     this.skillName = skillName;
@@ -161,8 +160,10 @@ class DragonbaneSkillButton extends ARGON.MAIN.BUTTONS.ActionButton {
     // use the configured skill name
     // or fallback if somehow it's not set to anything
     game.dragonbane.rollItem(
-      game.settings.get(MODULE_NAME, `skillName${this.skillName}`) ||
-        this.skillName,
+      (game.settings.get(MODULE_NAME, `skillName${this.skillName}`) as
+        | string
+        | null
+        | undefined) || this.skillName,
       "skill",
     );
   }
@@ -188,9 +189,27 @@ export default class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
   }
 
   async _getButtons() {
-    const Buttons: Array<any> = [];
+    const Buttons: Array<ArgonComponent> = [];
 
     if (!this.actor.isMonster) {
+      this.actor
+        .getEquippedWeapons()
+        .forEach((item) =>
+          Buttons.push(
+            new DragonbaneWeaponButton({ item, inActionPanel: true }),
+          ),
+        );
+      if (this.actor.hasSpells) {
+        const includeUnpreparedSpells = game.settings.get(
+          MODULE_NAME,
+          "includeUnpreparedSpells",
+        );
+        const spells = this.actor.items
+          .filter((i) => i.type == "spell")
+          .filter((s) => s.system.memorized || includeUnpreparedSpells);
+
+        Buttons.push(new DragonbaneSpellsButton(spells));
+      }
       Buttons.push(
         // new DragonbaneDashButton(), // not really implemented yet. Just double movement for a round?
         new ARGON.MAIN.BUTTONS.SplitButton(
@@ -226,7 +245,7 @@ export default class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
   }
 
   // hacky, but it hides/shows it when the death state changes
-  updateActionUse() {
+  override updateActionUse() {
     super.updateActionUse();
     this.updateVisibility();
   }

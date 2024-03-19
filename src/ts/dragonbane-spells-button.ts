@@ -4,11 +4,15 @@ const ARGON = CONFIG.ARGON;
 
 const spellSort = (a, b) => a.name.localeCompare(b.name);
 
-class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS.ButtonPanelButton {
+export class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS
+  .ButtonPanelButton {
+  spells: Array<DragonbaneItem>;
+
   constructor(spells) {
-    super();
+    super(spells);
     this.spells = spells;
   }
+
   get classes() {
     return ["action-element", "ech-blur", "dragonbane-action-element"];
   }
@@ -49,19 +53,15 @@ class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS.ButtonPanelButton {
       });
     } else {
       return new ARGON.MAIN.BUTTON_PANELS.ButtonPanel({
-        buttons: this.spells.sort(spellSort).map(
-          (item) => new DragonbaneSpellButton({ id: this.id, item }),
-        ),
+        buttons: this.spells
+          .sort(spellSort)
+          .map((item) => new DragonbaneSpellButton({ id: this.id, item })),
       });
     }
   }
 }
 
 class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
-  constructor(...args) {
-    super(...args);
-  }
-
   get classes() {
     return [
       "feature-element",
@@ -134,38 +134,10 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     });
   }
 
-  async _renderInner() {
+  override async _renderInner() {
     await super._renderInner();
 
     // embed the item id in the element for the left click handler to use
-    this.element.dataset.itemId = this.item.id;
-  }
-}
-
-export default class DragonbaneMagicPanel extends ARGON.MAIN.ActionPanel {
-  get classes() {
-    return ["actions-container", "dragonbane-actions-container"];
-  }
-  get label() {
-    return game.i18n.localize("enhancedcombathud-dragonbane.panels.magic");
-  }
-
-  get maxActions() {
-    return this.actor.hasSpells ? 1 : null;
-  }
-
-  async _getButtons() {
-    if (!this.actor.hasSpells) {
-      return [];
-    }
-    const includeUnpreparedSpells = game.settings.get(
-      MODULE_NAME,
-      "includeUnpreparedSpells",
-    );
-    const spells = this.actor.items
-      .filter((i) => i.type == "spell")
-      .filter((s) => s.system.memorized || includeUnpreparedSpells);
-
-    return [new DragonbaneSpellsButton(spells)];
+    this.element.dataset.itemId = this.item?.id;
   }
 }

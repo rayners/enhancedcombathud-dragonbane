@@ -46,6 +46,8 @@ class DragonbaneEvadeButton extends ARGON.MAIN.BUTTONS.ActionButton {
 }
 
 class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
+  _parryWeapon: DragonbaneItem;
+
   constructor() {
     super();
 
@@ -72,7 +74,7 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
     return "modules/enhancedcombathud/icons/svg/crossed-swords.svg";
   }
 
-  async _renderInner() {
+  override async _renderInner() {
     await super._renderInner();
     if (!this._parryWeapon) {
       this.element.style.display = "none";
