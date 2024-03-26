@@ -54,6 +54,7 @@ class DragonbaneActor extends Actor {
   isMonster: boolean;
   getEquippedWeapons(): Array<DragonbaneItem>;
   hasSpells: boolean;
+  getSkill(skillName: string): any;
 }
 
 class ArgonComponent {

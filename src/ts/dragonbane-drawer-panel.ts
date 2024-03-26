@@ -6,57 +6,86 @@ export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {
   }
 
   get title() {
-    return "Skills & Abilities";
+    return "Attributes & Skills";
   }
 
   get categories() {
     if (this.actor.isMonster) {
       return [];
     }
-    const attributes = [
-      new ARGON.DRAWER.DrawerButton(
-        ["STR", "CON", "AGL", "INT", "WIL", "CHA"].map((a) => ({
-          label: a,
-          onClick: () => game.dragonbane.rollAttribute(this.actor, a),
-        })),
-      ),
-    ];
+    const attributesButtons = ["STR", "CON", "AGL", "INT", "WIL", "CHA"].map(
+      (a) =>
+        new ARGON.DRAWER.DrawerButton([
+          {
+            label: a,
+            onClick: () => game.dragonbane.rollAttribute(this.actor, a),
+          },
+          {
+            label: this.actor.system.attributes[a.toLowerCase()]?.value,
+            onClick: () => game.dragonbane.rollAttribute(this.actor, a),
+          },
+        ]),
+    );
 
-    const skills = [
-      new ARGON.DRAWER.DrawerButton(
-        game.items
-          .filter((i) => i.type === "skill" && i.system.skillType === "core")
-          .map((skill) => ({
-            label: skill.name,
-            onClick: () => game.dragonbane.rollItem(skill.name, "skill"),
-          })),
-      ),
-    ];
-    const weapons = [
-      new ARGON.DRAWER.DrawerButton(
-        game.items
-          .filter((i) => i.type === "skill" && i.system.skillType === "weapon")
-          .map((skill) => ({
-            label: skill.name,
-            onClick: () => game.dragonbane.rollItem(skill.name, "skill"),
-          })),
-      ),
-    ];
+    const skillsButtons = game.items
+      .filter((i) => i.type === "skill" && i.system.skillType === "core")
+      .map(
+        (skill) =>
+          new ARGON.DRAWER.DrawerButton([
+            {
+              label: skill.name,
+              onClick: () => game.dragonbane.rollItem(skill.name, "skill"),
+            },
+            {
+              label: this.actor.getSkill(skill.name)?.system.value,
+              onClick: () => game.dragonbane.rollItem(skill.name, "skill"),
+            },
+          ]),
+      );
+
+    const weaponsButtons = game.items
+      .filter((i) => i.type === "skill" && i.system.skillType === "weapon")
+      .map(
+        (skill) =>
+          new ARGON.DRAWER.DrawerButton([
+            {
+              label: skill.name,
+              onClick: () => game.dragonbane.rollItem(skill.name, "skill"),
+            },
+            {
+              label: this.actor.getSkill(skill.name)?.system.value,
+              onClick: () => game.dragonbane.rollItem(skill.name, "skill"),
+            },
+          ]),
+      );
+
     return [
       {
-        captions: [{ label: "Attribute", align: "left" }],
-        align: ["left"],
-        buttons: attributes,
+        gridCols: "8fr 1fr",
+        captions: [
+          { label: "Attribute", align: "left" },
+          { label: "", align: "right" },
+        ],
+        align: ["left", "right"],
+        buttons: attributesButtons,
       },
       {
-        captions: [{ label: "Skill", align: "left" }],
-        align: ["left"],
-        buttons: skills,
+        gridCols: "8fr 1fr",
+        captions: [
+          { label: "Skill", align: "left" },
+          { label: "", align: "right" },
+        ],
+        align: ["left", "right"],
+        buttons: skillsButtons,
       },
       {
-        captions: [{ label: "Weapon", align: "left" }],
-        align: ["left"],
-        buttons: weapons,
+        gridCols: "8fr 1fr",
+        captions: [
+          { label: "Weapon", align: "left" },
+          { label: "", align: "right" },
+        ],
+        align: ["left", "right"],
+        buttons: weaponsButtons,
       },
     ];
   }
