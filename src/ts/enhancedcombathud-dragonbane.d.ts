@@ -52,6 +52,8 @@ class DragonbaneActor extends Actor {
   system: any;
 
   isMonster: boolean;
+  isCharacter: boolean;
+  isNpc: boolean;
   getEquippedWeapons(): Array<DragonbaneItem>;
   hasSpells: boolean;
   getSkill(skillName: string): any;
