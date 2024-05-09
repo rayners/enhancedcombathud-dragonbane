@@ -1,0 +1,37 @@
+{
+  "enhancedcombathud-dragonbane": {
+    "settings": {
+      "includeUnpreparedSpells": "Inkludera oförberedda besvärjelser",
+      "includeUnpreparedSpellsHint": "Inkludera oförberedda besvärjelser i besvärjelselistan",
+      "groupSpellsByRank": "Gruppera besvärjelser efter nivå",
+      "groupSpellsByRankHint": "",
+      "skillNameHealing": "Färdighet för Första Hjälpen-knappen",
+      "skillNamePersuasion": "Färdighet för Samla-knappen",
+      "skillNameEvade": "Färdighet för Undvika-knappen"
+    },
+    "panels": {
+      "attack": "Attack",
+      "actions": "Åtgärder",
+      "magic": "Magi",
+      "defense": "Försvar",
+      "dying": "Döende"
+    },
+    "actions": {
+      "first-aid": "Första Hjälpen",
+      "rally": "Kämpa på",
+      "rally-self": "Kämpa på (själv)",
+      "parry": "Parera",
+      "dodge": "Ducka",
+      "monster-attack": "Monsteranfall",
+      "monster-defend": "Monsterförsvar",
+      "death-roll": "Dödsslag"
+    },
+    "buttons": {
+      "heroic-abilities": "Hjälteförmågor",
+      "round-rest": "Snabb vila",
+      "spells": "besvärjelser",
+      "shift-rest": "Lång vila",
+      "stretch-rest": "Kort vila"
+    }
+  }
+}
