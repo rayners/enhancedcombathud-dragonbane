@@ -89,10 +89,7 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
       subtitle: "Heroic Ability",
       description: this.item.system.description,
       details: [{ label: "WP Cost", value: this.item.system.wp }],
-      properties: [
-        { label: this.item.system.abilityType, primary: true },
-        { label: `WP: ${this.item.system.wp}`, primary: true },
-      ],
+      properties: [{ label: this.item.system.abilityType, primary: true }],
       footerText: this.item.system.requirement,
     };
   }
