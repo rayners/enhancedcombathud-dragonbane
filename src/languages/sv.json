@@ -32,6 +32,41 @@
       "spells": "besvärjelser",
       "shift-rest": "Lång vila",
       "stretch-rest": "Kort vila"
+    },
+    "portrait": {
+      "hp": "KP",
+      "wp": "VP"
+    },
+    "spells":{
+      "rank": "Nivå {rank}"
+    },
+    "tooltips": {
+      "heroic-ability": "Hjälteförmåga",
+      "wp-cost": "VP-kostnad"
+    },
+    "weapon": {
+      "tooltips": {
+        "damage": "Skada",
+        "durability": "Brytvärde",
+        "range": "Räckvidd",
+        "features": "Egenskaper"
+      }
+    },
+    "drawer": {
+      "attributes-and-skills": "Grundegenskaper och färdigheter",
+      "skills": "Färdigheter",
+      "magic": "Magi",
+      "secondary-skills": "Sekundära färdigheter",
+      "weapons": "Vapen",
+      "attribute": "Grundegenskaper",
+      "attributes": {
+        "STR": "STY",
+        "CON": "FYS",
+        "AGL": "SMI",
+        "INT": "INT",
+        "WIL": "PSY",
+        "CHA": "KAR"
+      }
     }
   }
 }
