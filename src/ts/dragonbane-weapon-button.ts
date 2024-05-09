@@ -20,7 +20,6 @@ export class DragonbaneWeaponButton extends ARGON.MAIN.BUTTONS.ItemButton {
   }
 
   async getTooltipData() {
-    console.log(this.item);
     const props = ["worn", "mainHand", "offHand", "broken"];
     return {
       title: this.item.name,
