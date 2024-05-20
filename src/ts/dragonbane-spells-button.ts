@@ -40,7 +40,9 @@ export class DragonbaneSpellsButton extends ARGON.MAIN.BUTTONS
         .map(
           (rank) =>
             new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({
-              label: `Rank ${rank}`,
+              label: game.i18n.format(
+                  "enhancedcombathud-dragonbane.drawer.spells.rank", {rank}
+              ),
               buttons: spellsByRank[rank]
                 .sort(spellSort)
                 .map((item) => new DragonbaneSpellButton({ item })),

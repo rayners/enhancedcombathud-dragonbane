@@ -25,10 +25,18 @@ export class DragonbaneWeaponButton extends ARGON.MAIN.BUTTONS.ItemButton {
       title: this.item.name,
       subtitle: `${this.item.system.skill.name}: ${this.item.system.skill.value}`,
       details: [
-        { label: "Damage", value: this.item.system.damage },
-        { label: "Durability", value: this.item.system.durability },
-        { label: "Range", value: this.item.system.calculatedRange },
-        { label: "Features", value: this.item.system.features.join(", ") },
+        { label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.weapon.tooltips.damage",
+          ), value: this.item.system.damage },
+        { label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.weapon.tooltips.durability",
+          ), value: this.item.system.durability },
+        { label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.weapon.tooltips.range",
+          ), value: this.item.system.calculatedRange },
+        { label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.weapon.tooltips.features",
+          ), value: this.item.system.features.join(", ") },
       ],
       properties: props.reduce((m: Array<object>, p): Array<object> => {
         if (this.item.system[p]) {

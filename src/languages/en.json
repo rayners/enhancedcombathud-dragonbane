@@ -32,6 +32,41 @@
       "spells": "Spells",
       "shift-rest": "Shift Rest",
       "stretch-rest": "Stretch Rest"
+    },
+    "portrait": {
+      "hp": "HP",
+      "wp": "WP"
+    },
+    "spells":{
+      "rank": "Rank {rank}"
+    },
+    "tooltips": {
+      "heroic-ability": "Heroic Ability",
+      "wp-cost": "WP Cost"
+    },
+    "weapon": {
+      "tooltips": {
+        "damage": "Damage",
+        "durability": "Durability",
+        "range": "Range",
+        "features": ":Features"
+      }
+    },
+    "drawer": {
+      "attributes-and-skills": "Attributes & Skills",
+      "skills": "Skills",
+      "magic": "Magic",
+      "secondary-skills": "Secondary Skills",
+      "weapons": "Weapons",
+      "attribute": "Attribute",
+      "attributes": {
+        "STR": "STR",
+        "CON": "CON",
+        "AGL": "AGL",
+        "INT": "INT",
+        "WIL": "WIL",
+        "CHA": "CHA"
+      }
     }
   }
 }
