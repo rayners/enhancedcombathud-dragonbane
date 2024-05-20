@@ -57,6 +57,9 @@ class DragonbaneActor extends Actor {
   getEquippedWeapons(): Array<DragonbaneItem>;
   hasSpells: boolean;
   getSkill(skillName: string): any;
+
+  hasCondition(attribute: string): boolean;
+  updateCondition(attribute: string, value: boolean): void;
 }
 
 class ArgonComponent {
@@ -66,6 +69,7 @@ class ArgonComponent {
   name?: string;
 
   async _renderInner(): void;
+  async render(): void;
   element: HTMLElement;
 }
 
