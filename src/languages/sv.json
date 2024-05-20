@@ -37,9 +37,6 @@
       "hp": "KP",
       "wp": "VP"
     },
-    "spells":{
-      "rank": "Nivå {rank}"
-    },
     "tooltips": {
       "heroic-ability": "Hjälteförmåga",
       "wp-cost": "VP-kostnad"
@@ -56,6 +53,9 @@
       "attributes-and-skills": "Grundegenskaper och färdigheter",
       "skills": "Färdigheter",
       "magic": "Magi",
+      "spells": {
+        "rank": "Nivå {rank}"
+      },
       "secondary-skills": "Sekundära färdigheter",
       "weapons": "Vapen",
       "attribute": "Grundegenskaper",

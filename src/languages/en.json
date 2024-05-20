@@ -37,9 +37,6 @@
       "hp": "HP",
       "wp": "WP"
     },
-    "spells":{
-      "rank": "Rank {rank}"
-    },
     "tooltips": {
       "heroic-ability": "Heroic Ability",
       "wp-cost": "WP Cost"
@@ -56,6 +53,9 @@
       "attributes-and-skills": "Attributes & Skills",
       "skills": "Skills",
       "magic": "Magic",
+      "spells": {
+        "rank": "Rank {rank}"
+      },
       "secondary-skills": "Secondary Skills",
       "weapons": "Weapons",
       "attribute": "Attribute",

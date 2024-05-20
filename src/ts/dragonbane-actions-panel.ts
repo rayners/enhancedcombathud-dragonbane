@@ -87,10 +87,17 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
     return {
       title: this.item.name,
       subtitle: game.i18n.localize(
-          "enhancedcombathud-dragonbane.tooltips.heroic-ability",
+        "enhancedcombathud-dragonbane.tooltips.heroic-ability",
       ),
       description: this.item.system.description,
-      details: [{ label: game.i18n.localize(            "enhancedcombathud-dragonbane.tooltips.wp-cost",        ), value: this.item.system.wp }],
+      details: [
+        {
+          label: game.i18n.localize(
+            "enhancedcombathud-dragonbane.tooltips.wp-cost",
+          ),
+          value: this.item.system.wp,
+        },
+      ],
       properties: [{ label: this.item.system.abilityType, primary: true }],
       footerText: this.item.system.requirement,
     };

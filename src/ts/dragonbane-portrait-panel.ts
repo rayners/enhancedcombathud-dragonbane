@@ -48,9 +48,9 @@ export default class DragonbanePortraitPanel extends ARGON.PORTRAIT
     const { system } = this.actor;
     const Blocks = [
       [
-        { text: game.i18n.localize(
-              "enhancedcombathud-dragonbane.portrait.hp",
-          ) }, // game.i18n.localize('DoD.secondaryAttributeTypes.hitPoints') },
+        {
+          text: game.i18n.localize("enhancedcombathud-dragonbane.portrait.hp"),
+        }, // game.i18n.localize('DoD.secondaryAttributeTypes.hitPoints') },
         { text: system.hitPoints.value },
         { text: "/" },
         { text: system.hitPoints.max },
@@ -60,9 +60,9 @@ export default class DragonbanePortraitPanel extends ARGON.PORTRAIT
     if (system.willPoints?.max) {
       // if they have any WP
       Blocks.push([
-        { text: game.i18n.localize(
-              "enhancedcombathud-dragonbane.portrait.wp",
-          ) }, // game.i18n.localize('DoD.secondaryAttributeTypes.willPoints') },
+        {
+          text: game.i18n.localize("enhancedcombathud-dragonbane.portrait.wp"),
+        }, // game.i18n.localize('DoD.secondaryAttributeTypes.willPoints') },
         { text: system.willPoints.value },
         { text: "/" },
         { text: system.willPoints.max },
