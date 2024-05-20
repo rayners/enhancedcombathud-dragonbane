@@ -12,11 +12,11 @@ export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {
   }
 
   get title() {
-    return this.actor.isCharacter ? game.i18n.localize(
-        "enhancedcombathud-dragonbane.drawer.attributes-and-skills",
-    ) : game.i18n.localize(
-        "enhancedcombathud-dragonbane.drawer.skills",
-    );
+    return this.actor.isCharacter
+      ? game.i18n.localize(
+          "enhancedcombathud-dragonbane.drawer.attributes-and-skills",
+        )
+      : game.i18n.localize("enhancedcombathud-dragonbane.drawer.skills");
   }
 
   get categories() {
@@ -31,7 +31,7 @@ export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {
           new ARGON.DRAWER.DrawerButton([
             {
               label: game.i18n.localize(
-                  "enhancedcombathud-dragonbane.drawer.attributes." + a,
+                "enhancedcombathud-dragonbane.drawer.attributes." + a,
               ),
               onClick: () => game.dragonbane.rollAttribute(this.actor, a),
             },
@@ -44,9 +44,12 @@ export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {
       categories.push({
         gridCols: "8fr 1fr",
         captions: [
-          { label: game.i18n.localize(
-                "enhancedcombathud-dragonbane.drawer.attribute",
-            ), align: "left" },
+          {
+            label: game.i18n.localize(
+              "enhancedcombathud-dragonbane.drawer.attribute",
+            ),
+            align: "left",
+          },
           { label: "", align: "right" },
         ],
         align: ["left", "right"],
@@ -55,18 +58,26 @@ export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {
     }
 
     const skillGroups = [
-      { group: "core", label: game.i18n.localize(
-            "enhancedcombathud-dragonbane.drawer.skills",
-        ) },
-      { group: "magic", label: game.i18n.localize(
-            "enhancedcombathud-dragonbane.drawer.magic",
-        ) },
-      { group: "secondary", label: game.i18n.localize(
-            "enhancedcombathud-dragonbane.drawer.secondary-skills",
-        ) },
-      { group: "weapon", label: game.i18n.localize(
-            "enhancedcombathud-dragonbane.drawer.weapons",
-        ) },
+      {
+        group: "core",
+        label: game.i18n.localize("enhancedcombathud-dragonbane.drawer.skills"),
+      },
+      {
+        group: "magic",
+        label: game.i18n.localize("enhancedcombathud-dragonbane.drawer.magic"),
+      },
+      {
+        group: "secondary",
+        label: game.i18n.localize(
+          "enhancedcombathud-dragonbane.drawer.secondary-skills",
+        ),
+      },
+      {
+        group: "weapon",
+        label: game.i18n.localize(
+          "enhancedcombathud-dragonbane.drawer.weapons",
+        ),
+      },
     ];
 
     skillGroups.forEach(({ group, label }) => {
