@@ -16,6 +16,14 @@ export function registerSettings(): void {
     type: Boolean,
     default: true,
   });
+
+  game.settings.register(MODULE_NAME, "preferShieldParry", {
+    name: `${MODULE_NAME}.settings.preferShieldParry`,
+    hint: `${MODULE_NAME}.settings.preferShieldParryHint`,
+    config: true,
+    type: Boolean,
+    default: true,
+  });
 }
 
 export function registerSkillSettings(): void {

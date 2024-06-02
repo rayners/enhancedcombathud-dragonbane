@@ -5,6 +5,8 @@
       "includeUnpreparedSpellsHint": "Include unprepared spells in spell list",
       "groupSpellsByRank": "Group spells by rank",
       "groupSpellsByRankHint": "",
+      "preferShieldParry": "Prefer shield for parry button",
+      "preferShieldParryHint": "Weight the automatic selection of parry item in favor of shields (via weapon features). Otherwise, sort on total of skill plus durability.",
       "skillNameHealing": "Skill for First Aid button",
       "skillNamePersuasion": "Skill for Rally button",
       "skillNameEvade": "Skill for Dodge button"
