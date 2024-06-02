@@ -95,7 +95,7 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     }
     return {
       title: this.item.name,
-      subtitle: this.item.system.school,
+      subtitle: `${this.item.system.school}: ${this.item.system.skillValue}`,
       description: this.item.system.description,
       details,
       properties: [
@@ -115,7 +115,6 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
           .split(/\s*,\s*/)
           .map((r) => ({ label: r, secondary: true })),
       ],
-      footerText: `Skill ${this.item.system.skillValue}`,
     };
   }
 
