@@ -45,6 +45,17 @@ class DragonbaneEvadeButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 }
 
+function parrySortValue(item: DragonbaneItem): number {
+  return (
+    item.system.skill.value +
+    item.system.durability +
+    (game.settings.get(MODULE_NAME, "preferShieldParry") &&
+    item.hasWeaponFeature("shield")
+      ? 25
+      : 0)
+  );
+}
+
 class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
   _parryWeapon: DragonbaneItem;
 
@@ -55,12 +66,7 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
     this._parryWeapon = this.actor
       .getEquippedWeapons()
       .filter((w) => !w.hasWeaponFeature("noparry"))
-      .sort(
-        (a, b) =>
-          b.system.skill.value +
-          b.system.durability -
-          (a.system.skill.value + a.system.durability),
-      )[0];
+      .sort((a, b) => parrySortValue(b) - parrySortValue(a))[0];
   }
 
   get classes() {
