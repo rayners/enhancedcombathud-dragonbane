@@ -69,15 +69,8 @@ class DragonbaneAbilityButton extends ARGON.MAIN.BUTTONS.ItemButton {
     return this.item?.img;
   }
 
-  async _onLeftClick(event) {
-    // we're going to have to fake an event, since this is actually
-    // a mouseup event instead of the expected left click (per the
-    // sheet code)
-    this.actor.sheet._onUseItem({
-      type: "click",
-      currentTarget: event.currentTarget,
-      preventDefault: () => event.preventDefault(),
-    });
+  async _onLeftClick() {
+    this.actor.useAbility(this.item);
   }
 
   get hasTooltip() {

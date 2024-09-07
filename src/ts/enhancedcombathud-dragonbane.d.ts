@@ -38,7 +38,6 @@ class DragonbaneActorSheet extends ActorSheet {
   _onSkillRoll(
     event: Pick<Event, "type" | "currentTarget" | "preventDefault">,
   ): void;
-  _onUseItem(object): void;
   _onDeathRoll(event: Event): void;
 
   // Rests
@@ -60,6 +59,8 @@ class DragonbaneActor extends Actor {
 
   hasCondition(attribute: string): boolean;
   updateCondition(attribute: string, value: boolean): void;
+
+  useAbility(item: DragonbaneItem): void;
 }
 
 class ArgonComponent {
