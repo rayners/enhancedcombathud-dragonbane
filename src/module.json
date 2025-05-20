@@ -2,14 +2,14 @@
   "id": "enhancedcombathud-dragonbane",
   "title": "Argon - Combat HUD (DRAGONBANE)",
   "description": "",
-  "version": "0.10.2",
+  "version": "0.11.0",
 
   "library": "false",
   "manifestPlusVersion": "1.2.0",
   "compatibility": {
-    "minimum": 11,
-    "verified": 11,
-    "maximum": 12
+    "minimum": 12,
+    "verified": 13,
+    "maximum": 13
   },
   "authors": [
     {
@@ -30,7 +30,8 @@
       {
         "id": "enhancedcombathud",
         "type": "module",
-        "compatibility": {}
+        "compatibility": {
+        }
       }
     ]
   },

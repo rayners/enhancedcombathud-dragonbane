@@ -1,13 +1,14 @@
 {
   "private": true,
   "name": "@rayners/enhancedcombathud-dragonbane",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "license": "MIT",
   "scripts": {
     "build": "tsc && vite build"
   },
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
+    "@typhonjs-fvtt/runtime": "^0.1.0",
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "rollup-plugin-copy": "^3.5.0",
