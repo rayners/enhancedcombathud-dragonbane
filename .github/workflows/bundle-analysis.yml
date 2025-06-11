@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Bundle Analysis
-        uses: rayners/foundry-module-actions/bundle-analysis@v1
+        uses: rayners/foundry-module-actions/bundle-analysis@v3
         with:
           node-version: '18'
           github-packages: false
