@@ -1,0 +1,27 @@
+name: Bundle Analysis
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Bundle Analysis
+        uses: rayners/foundry-module-actions/bundle-analysis@v1
+        with:
+          node-version: '18'
+          github-packages: false
+          minimum-change-threshold: 100
