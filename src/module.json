@@ -30,8 +30,7 @@
       {
         "id": "enhancedcombathud",
         "type": "module",
-        "compatibility": {
-        }
+        "compatibility": {}
       }
     ]
   },

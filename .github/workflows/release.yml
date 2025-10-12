@@ -1,0 +1,28 @@
+# EnhancedCombatHUD-Dragonbane Release Workflow
+# Builds and packages the module for FoundryVTT distribution
+
+name: Release Module
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Release Module
+        uses: rayners/foundry-module-actions/release@v6.0.0
+        with:
+          node-version: '24'
+          build-command: 'npm run build'
+          working-directory: 'dist'
+          module-files: 'module.js module.json scripts/ styles/ templates/ languages/ icons/ README.md LICENSE'

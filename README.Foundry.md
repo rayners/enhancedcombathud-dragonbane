@@ -30,7 +30,7 @@ This module provides a specialized Combat HUD (Heads-Up Display) for the Dragonb
 
 1. In your Foundry VTT setup screen, go to the "Add-on Modules" tab
 2. Click "Install Module"
-3. In the "Manifest URL" field, paste: 
+3. In the "Manifest URL" field, paste:
    ```
    https://github.com/rayners/enhancedcombathud-dragonbane/releases/latest/download/module.json
    ```
@@ -56,6 +56,7 @@ To access these settings, go to Game Settings → Module Settings → Argon - Co
 ## Languages
 
 This module supports:
+
 - English
 - Swedish
 

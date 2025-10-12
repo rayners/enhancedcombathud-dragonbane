@@ -1,0 +1,22 @@
+name: Send GitHub Release to Discord
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  send-to-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send release notification to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK" ]; then
+            echo "DISCORD_WEBHOOK secret not set, skipping Discord notification"
+            exit 0
+          fi
+
+          curl -X POST "$DISCORD_WEBHOOK" \
+            -H "Content-Type: application/json" \
+            -d "{\"content\": \"**New Release: ${{ github.event.release.name }}**\n${{ github.event.release.html_url }}\n\n${{ github.event.release.body }}\"}"
