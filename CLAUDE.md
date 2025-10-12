@@ -1,6 +1,6 @@
 # EnhancedCombatHUD-Dragonbane
 
-An implementation of the Argon - Combat HUD for the Dragonbane system in Foundry VTT. The Argon - Combat HUD (CORE) module is required.
+An implementation of the Argon - Combat HUD for the Dragonbane system in Foundry VTT. This module is an extension of [Argon Combat HUD](https://github.com/theripper93/enhancedcombathud) and requires the Argon - Combat HUD (CORE) module to function.
 
 ## Development Context
 
@@ -47,7 +47,7 @@ Version 0.11.0 adds support for Foundry VTT v13 with the following changes:
 
 3. **Installation for v13**:
    - Update to Foundry VTT v13
-   - Update Argon Combat HUD (CORE) to version 1.5.0 or later
+   - Update Argon Combat HUD (CORE) to version 3.1.0 or later (tested with 4.0.x)
    - Update EnhancedCombatHUD-Dragonbane to version 0.11.0
    - Run `npm install` to install new dependencies
    - Run `npm run build` to build the module

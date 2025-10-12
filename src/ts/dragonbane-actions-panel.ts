@@ -203,9 +203,16 @@ export default class DragonbaneActionsPanel extends ARGON.MAIN.ActionPanel {
           MODULE_NAME,
           "includeUnpreparedSpells",
         );
+        // NPCs always get all spells, only filter for player characters
+        const isPlayerCharacter = this.actor.type === "character";
         const spells = this.actor.items
           .filter((i) => i.type == "spell")
-          .filter((s) => s.system.memorized || includeUnpreparedSpells);
+          .filter(
+            (s) =>
+              s.system.memorized ||
+              includeUnpreparedSpells ||
+              !isPlayerCharacter,
+          );
 
         Buttons.push(new DragonbaneSpellsButton(spells));
       }
