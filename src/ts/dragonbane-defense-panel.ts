@@ -104,11 +104,11 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
 }
 
 class DragonbaneFearButton extends ARGON.MAIN.BUTTONS.ActionButton {
-  _fearTable: RollTable;
+  _fearTable: RollTable | null;
 
   constructor() {
     super();
-    this._fearTable = fromUuidSync(FEAR_TABLE_UUID) as RollTable;
+    this._fearTable = fromUuidSync(FEAR_TABLE_UUID) as RollTable | null;
   }
 
   get classes() {
@@ -122,7 +122,6 @@ class DragonbaneFearButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   get icon() {
-    // TODO: Replace with proper icon once available
     return "icons/svg/terror.svg";
   }
 
@@ -134,14 +133,23 @@ class DragonbaneFearButton extends ARGON.MAIN.BUTTONS.ActionButton {
 }
 
 export default class DragonbaneDefensePanel extends ARGON.MAIN.ActionPanel {
+  _hasFearTable: boolean | null = null;
+
+  // Lazily detect fear table to avoid redundant lookups
+  get hasFearTable(): boolean {
+    if (this._hasFearTable === null) {
+      this._hasFearTable = !!fromUuidSync(FEAR_TABLE_UUID);
+    }
+    return this._hasFearTable;
+  }
+
   get classes() {
     return ["actions-container", "dragonbane-actions-container"];
   }
 
   get label() {
     // If fear table exists, show "Defence/Reactions", otherwise just "Defence"
-    const hasFearTable = !!fromUuidSync(FEAR_TABLE_UUID);
-    const key = hasFearTable
+    const key = this.hasFearTable
       ? "enhancedcombathud-dragonbane.panels.defense-reactions"
       : "enhancedcombathud-dragonbane.panels.defense";
     return game.i18n.localize(key);
@@ -159,8 +167,7 @@ export default class DragonbaneDefensePanel extends ARGON.MAIN.ActionPanel {
     const buttons = [new DragonbaneEvadeButton(), new DragonbaneParryButton()];
 
     // Add fear button if the table exists (from Dragonbane Core Set)
-    const hasFearTable = !!fromUuidSync(FEAR_TABLE_UUID);
-    if (hasFearTable) {
+    if (this.hasFearTable) {
       buttons.push(new DragonbaneFearButton());
     }
 

@@ -26,7 +26,8 @@ interface DragonbaneGame extends Game {
 declare let game: DragonbaneGame;
 
 // Foundry global utility functions
-declare function fromUuidSync(uuid: string): RollTable | null;
+// fromUuidSync can return any document type, so we use a generic signature
+declare function fromUuidSync(uuid: string): foundry.abstract.Document | null;
 
 // Also the global declarations for ARGON
 
