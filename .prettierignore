@@ -1,0 +1,18 @@
+# Release-please generated files
+CHANGELOG.md
+
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.min.js
+*.min.css
+package-lock.json
+
+# Other
+*.log
+.DS_Store
+.env
