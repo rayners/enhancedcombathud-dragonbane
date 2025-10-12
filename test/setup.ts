@@ -25,6 +25,14 @@ class MockActionPanel extends MockArgonComponent {
 }
 
 class MockActionButton {
+  actor: any;
+  token: any;
+
+  constructor(actor?: any, token?: any) {
+    this.actor = actor;
+    this.token = token;
+  }
+
   get classes() {
     return [];
   }
@@ -41,8 +49,8 @@ class MockActionButton {
 
 class MockItemButton extends MockActionButton {
   item: any;
-  constructor(item?: any) {
-    super();
+  constructor(item?: any, actor?: any, token?: any) {
+    super(actor, token);
     this.item = item;
   }
 }
@@ -186,3 +194,6 @@ class MockMovementHud extends MockArgonComponent {
     },
   },
 };
+
+// Mock fromUuidSync - default to returning null, tests can override
+(global as any).fromUuidSync = vi.fn(() => null);

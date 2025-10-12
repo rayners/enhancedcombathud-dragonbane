@@ -25,6 +25,9 @@ interface DragonbaneGame extends Game {
 
 declare let game: DragonbaneGame;
 
+// Foundry global utility functions
+declare function fromUuidSync(uuid: string): RollTable | null;
+
 // Also the global declarations for ARGON
 
 class DragonbaneActorSheet extends ActorSheet {

@@ -2,6 +2,9 @@ import { id as MODULE_NAME } from "../module.json";
 
 const ARGON = CONFIG.ARGON;
 
+// UUID of the Fear table from Dragonbane Core Set
+const FEAR_TABLE_UUID = "RollTable.wHTr9HuHkpVv7ccX";
+
 class DragonbaneMonsterDefendButton extends ARGON.MAIN.BUTTONS.ActionButton {
   get classes() {
     return ["action-element", "dragonbane-action-element"];
@@ -57,23 +60,25 @@ function parrySortValue(item: DragonbaneItem): number {
 }
 
 class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
-  _parryWeapon: DragonbaneItem;
+  _parryWeapon: DragonbaneItem | null = null;
 
-  constructor() {
-    super();
-
-    // select for highest skill+durability
-    this._parryWeapon = this.actor
-      .getEquippedWeapons()
-      .filter((w) => !w.hasWeaponFeature("noparry"))
-      .sort((a, b) => parrySortValue(b) - parrySortValue(a))[0];
+  // Lazily compute the parry weapon when first accessed
+  get parryWeapon(): DragonbaneItem | null {
+    if (this._parryWeapon === null && this.actor) {
+      // select for highest skill+durability
+      this._parryWeapon = this.actor
+        .getEquippedWeapons()
+        .filter((w) => !w.hasWeaponFeature("noparry"))
+        .sort((a, b) => parrySortValue(b) - parrySortValue(a))[0] || null;
+    }
+    return this._parryWeapon;
   }
 
   get classes() {
     return ["action-element", "dragonbane-action-element"];
   }
   get label() {
-    return `${game.i18n.localize("enhancedcombathud-dragonbane.actions.parry")} (${this._parryWeapon?.name})`;
+    return `${game.i18n.localize("enhancedcombathud-dragonbane.actions.parry")} (${this.parryWeapon?.name || ""})`;
   }
 
   get icon() {
@@ -82,7 +87,7 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
 
   override async _renderInner() {
     await super._renderInner();
-    if (!this._parryWeapon) {
+    if (!this.parryWeapon) {
       this.element.style.display = "none";
       return;
     }
@@ -91,7 +96,39 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
   async _onLeftClick() {
     // not sure if there is a way to default it to a parry
     // (doesn't seem to be one... yet)
-    game.dragonbane.rollItem(this._parryWeapon.name, this._parryWeapon.type);
+    if (this.parryWeapon) {
+      game.dragonbane.rollItem(this.parryWeapon.name, this.parryWeapon.type);
+    }
+  }
+}
+
+class DragonbaneFearButton extends ARGON.MAIN.BUTTONS.ActionButton {
+  _fearTable: RollTable;
+
+  constructor() {
+    super();
+    this._fearTable = fromUuidSync(FEAR_TABLE_UUID) as RollTable;
+  }
+
+  get classes() {
+    return ["action-element", "dragonbane-action-element"];
+  }
+
+  get label() {
+    return game.i18n.localize(
+      "enhancedcombathud-dragonbane.actions.fear-table",
+    );
+  }
+
+  get icon() {
+    // TODO: Replace with proper icon once available
+    return "icons/svg/terror.svg";
+  }
+
+  async _onLeftClick() {
+    if (this._fearTable) {
+      await this._fearTable.draw();
+    }
   }
 }
 
@@ -101,7 +138,12 @@ export default class DragonbaneDefensePanel extends ARGON.MAIN.ActionPanel {
   }
 
   get label() {
-    return game.i18n.localize("enhancedcombathud-dragonbane.panels.defense");
+    // If fear table exists, show "Defence/Reactions", otherwise just "Defence"
+    const hasFearTable = !!fromUuidSync(FEAR_TABLE_UUID);
+    const key = hasFearTable
+      ? "enhancedcombathud-dragonbane.panels.defense-reactions"
+      : "enhancedcombathud-dragonbane.panels.defense";
+    return game.i18n.localize(key);
   }
 
   get maxActions() {
@@ -112,7 +154,16 @@ export default class DragonbaneDefensePanel extends ARGON.MAIN.ActionPanel {
     if (this.actor.type === "monster") {
       return [new DragonbaneMonsterDefendButton()];
     }
-    return [new DragonbaneEvadeButton(), new DragonbaneParryButton()];
+
+    const buttons = [new DragonbaneEvadeButton(), new DragonbaneParryButton()];
+
+    // Add fear button if the table exists (from Dragonbane Core Set)
+    const hasFearTable = !!fromUuidSync(FEAR_TABLE_UUID);
+    if (hasFearTable) {
+      buttons.push(new DragonbaneFearButton());
+    }
+
+    return buttons;
   }
 
   get colorScheme() {
