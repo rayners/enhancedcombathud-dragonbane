@@ -5,9 +5,11 @@ An implementation of the Argon - Combat HUD for the Dragonbane system in Foundry
 ## Development Context
 
 For comprehensive development standards and patterns, see:
+
 - [Development Context Reference](dev-context/README.md)
 
 Specific areas:
+
 - Development workflow: [dev-context/foundry-development-practices.md](dev-context/foundry-development-practices.md)
 - Testing standards: [dev-context/testing-practices.md](dev-context/testing-practices.md)
 - Architecture patterns: [dev-context/module-architecture-patterns.md](dev-context/module-architecture-patterns.md)
@@ -34,10 +36,12 @@ This module provides a specialized Combat HUD (Heads-Up Display) for the Dragonb
 Version 0.11.0 adds support for Foundry VTT v13 with the following changes:
 
 1. **Updated Module Manifest**:
+
    - Updated compatibility to support Foundry VTT v13
    - Added specific compatibility requirements for Argon Combat HUD CORE
 
 2. **Updated Dependencies**:
+
    - Added TyphonJS runtime for Foundry v13 support
    - Maintained existing Foundry VTT type definitions
 
@@ -97,16 +101,19 @@ The UI is divided into specialized components:
 ## Setup and Building
 
 1. **Prerequisites**:
+
    - Node.js and npm
    - Foundry VTT
    - Argon - Combat HUD (CORE) module
    - Dragonbane system
 
 2. **Installation**:
+
    - Clone the repository
    - Run `npm install` to install dependencies
 
 3. **Building**:
+
    - Run `npm run build` to compile TypeScript and build the module
    - The compiled module will be in the `dist/` directory
 
@@ -129,18 +136,21 @@ The module provides several configuration options in Foundry VTT settings:
 When creating new components, follow these patterns:
 
 1. **Extending Base Classes**:
+
    - Extend the appropriate Argon HUD base class:
      - `ARGON.MAIN.ActionPanel` for main panels
      - `ARGON.MAIN.BUTTONS.ActionButton` for action buttons
      - `ARGON.MAIN.BUTTONS.ItemButton` for item-based buttons
 
 2. **Button Implementation**:
+
    - Override `classes` to provide Dragonbane-specific styling
    - Override `label` to set the button text
    - Override `icon` to set the button icon
    - Implement `_onLeftClick` to handle button activation
 
 3. **Panel Implementation**:
+
    - Override `classes` for Dragonbane-specific styling
    - Override `label` for panel title
    - Implement `_getButtons` to populate the panel with buttons
@@ -152,10 +162,12 @@ When creating new components, follow these patterns:
 ## Localization
 
 The module supports multiple languages:
+
 - English (en.json)
 - Swedish (sv.json)
 
 Use the localization system by referencing keys with:
+
 ```javascript
 game.i18n.localize("enhancedcombathud-dragonbane.key.path");
 ```
@@ -176,19 +188,23 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 This project follows universal FoundryVTT development standards documented in the `dev-context/` directory. Key standards include:
 
 ### Quality Requirements (ALWAYS ENFORCED)
+
 - **Documentation Accuracy**: All claims must be verifiable in code
 - **No Hyperbole**: Avoid "works with all systems", "fully tested", etc.
 - **Version References**: Use generic, verifiable version references
 - **Date Accuracy**: Always use `date` command for accurate timestamps
 
 ### Testing Standards
+
 - **Core Business Logic**: 90%+ test coverage required
 - **TDD Workflow**: Tests before implementation for new features
 - **Test Command**: Use `npm test` or `npm run test:run` (NEVER `npm run test:workspaces`)
 - **Quality Gates**: 100% test pass rate before releases
 
 ### Pre-Commit Checklist
+
 Before committing, always run:
+
 ```bash
 npm run lint
 npm run typecheck
@@ -197,6 +213,7 @@ npm run build
 ```
 
 ### Communication Standards
+
 - Provide honest, unvarnished technical assessments
 - Don't inflate the significance of incremental improvements
 - Call maintenance work what it is rather than overselling it
@@ -207,16 +224,19 @@ npm run build
 This module extends the Argon Combat HUD framework. Key integration patterns:
 
 ### Component Extension
+
 - Extend appropriate Argon base classes (`ARGON.MAIN.ActionPanel`, `ARGON.MAIN.BUTTONS.ActionButton`, etc.)
 - Override `classes`, `label`, and `icon` for Dragonbane-specific customization
 - Implement appropriate click handlers and tooltip support
 
 ### Dragonbane System Integration
+
 - This module is tightly coupled to the Dragonbane system
 - Unlike other modules in the portfolio, this is NOT system-agnostic
 - All functionality assumes Dragonbane-specific data structures and APIs
 
 ### Design Considerations
+
 - **Hard Dependency**: Requires both Argon Combat HUD (CORE) and Dragonbane system
 - **Foundry v13**: Version 0.11.0+ supports Foundry VTT v13 with TyphonJS runtime
 - **Extension Pattern**: Builds upon Argon's architecture rather than replacing it
