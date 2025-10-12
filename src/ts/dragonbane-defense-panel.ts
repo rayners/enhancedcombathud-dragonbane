@@ -66,10 +66,11 @@ class DragonbaneParryButton extends ARGON.MAIN.BUTTONS.ActionButton {
   get parryWeapon(): DragonbaneItem | null {
     if (this._parryWeapon === null && this.actor) {
       // select for highest skill+durability
-      this._parryWeapon = this.actor
-        .getEquippedWeapons()
-        .filter((w) => !w.hasWeaponFeature("noparry"))
-        .sort((a, b) => parrySortValue(b) - parrySortValue(a))[0] || null;
+      this._parryWeapon =
+        this.actor
+          .getEquippedWeapons()
+          .filter((w) => !w.hasWeaponFeature("noparry"))
+          .sort((a, b) => parrySortValue(b) - parrySortValue(a))[0] || null;
     }
     return this._parryWeapon;
   }
