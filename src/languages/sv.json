@@ -14,6 +14,7 @@
       "actions": "Åtgärder",
       "magic": "Magi",
       "defense": "Försvar",
+      "defense-reactions": "Försvar/Reaktioner",
       "dying": "Döende"
     },
     "actions": {
@@ -22,6 +23,7 @@
       "rally-self": "Kämpa på (själv)",
       "parry": "Parera",
       "dodge": "Ducka",
+      "fear-table": "Skräck",
       "monster-attack": "Monsteranfall",
       "monster-defend": "Monsterförsvar",
       "death-roll": "Dödsslag"
