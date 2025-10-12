@@ -3,6 +3,7 @@
     ".": {
       "release-type": "node",
       "package-name": "enhancedcombathud-dragonbane",
+      "include-component-in-tag": false,
       "extra-files": ["src/module.json"],
       "changelog-sections": [
         { "type": "feat", "section": "Features", "hidden": false },
