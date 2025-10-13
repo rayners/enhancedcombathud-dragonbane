@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Bundle Analysis
-        uses: rayners/foundry-module-actions/bundle-analysis@v6.0.0
+        uses: rayners/foundry-module-actions/bundle-analysis@v6.0.1
         with:
           node-version: '24'
           minimum-change-threshold: 100
