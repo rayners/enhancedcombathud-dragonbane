@@ -95,7 +95,7 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     }
     return {
       title: this.item.name,
-      subtitle: `${this.item.system.school}: ${this.item.system.skillValue}`,
+      subtitle: `${game.i18n.localize(this.item.system.school)}: ${this.item.system.skillValue}`,
       description: this.item.system.description,
       details,
       properties: [
