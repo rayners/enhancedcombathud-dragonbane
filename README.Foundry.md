@@ -22,9 +22,9 @@ This module provides a specialized Combat HUD (Heads-Up Display) for the Dragonb
 
 ## System Requirements
 
-- Foundry VTT v11-v13
-- [Argon Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) v1.5.0+
-- [Dragonbane](https://foundryvtt.com/packages/dragonbane/) system
+- Foundry VTT v14
+- [Argon Combat HUD (CORE)](https://foundryvtt.com/packages/enhancedcombathud/) v5.0.1+
+- [Dragonbane](https://foundryvtt.com/packages/dragonbane/) system (v4.1.1+, `v14` branch)
 
 ## Installation
 

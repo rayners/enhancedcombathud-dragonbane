@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from "../module.json";
+import { MODULE_NAME } from "./module-id";
 import { DragonbaneWeaponButton } from "./dragonbane-weapon-button";
 import { DragonbaneSpellsButton } from "./dragonbane-spells-button";
 
@@ -20,12 +20,15 @@ class DragonbaneMonsterAttackButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   async _onLeftClick(event) {
-    this.actor.sheet._onMonsterAttack({
-      type: "click",
-      preventDefault: () => event.preventDefault(),
-      shiftKey: event.shiftKey,
-      ctrlKey: event.ctrlKey,
-    });
+    this.actor.sheet._onMonsterAttack(
+      {
+        type: "click",
+        preventDefault: () => event.preventDefault(),
+        shiftKey: event.shiftKey,
+        ctrlKey: event.ctrlKey,
+      },
+      this.element,
+    );
   }
 }
 class DragonbaneHeroicAbilitiesButton extends ARGON.MAIN.BUTTONS
@@ -119,7 +122,8 @@ class DragonbaneRoundRestButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   async _onLeftClick(event) {
-    this.actor.system.canRestRound && this.actor.sheet._onRestRound(event);
+    this.actor.system.canRestRound &&
+      this.actor.sheet._onRestRound(event, this.element);
   }
 }
 
@@ -132,12 +136,22 @@ class DragonbaneRoundRestButton extends ARGON.MAIN.BUTTONS.ActionButton {
 //   }
 // }
 
+type DragonbaneConfigurableSkillName = "Healing" | "Persuasion" | "Evade";
+
 class DragonbaneSkillButton extends ARGON.MAIN.BUTTONS.ActionButton {
   _icon: string;
   _label: string;
-  skillName: string;
+  skillName: DragonbaneConfigurableSkillName;
 
-  constructor({ skillName, iconName, label }) {
+  constructor({
+    skillName,
+    iconName,
+    label,
+  }: {
+    skillName: DragonbaneConfigurableSkillName;
+    iconName?: string;
+    label?: string;
+  }) {
     super();
     this.skillName = skillName;
     this._icon = iconName ? `modules/${MODULE_NAME}/icons/${iconName}` : "";

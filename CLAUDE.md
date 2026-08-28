@@ -31,28 +31,34 @@ This module provides a specialized Combat HUD (Heads-Up Display) for the Dragonb
 - Heroic abilities integration
 - Support for characters, NPCs, and monsters
 
-## Foundry VTT v13 Compatibility
+## Foundry VTT v14 Compatibility
 
-Version 0.11.0 adds support for Foundry VTT v13 with the following changes:
+Version 0.13.0 adds support for Foundry VTT v14 with the following changes:
 
 1. **Updated Module Manifest**:
 
-   - Updated compatibility to support Foundry VTT v13
-   - Added specific compatibility requirements for Argon Combat HUD CORE
+   - Updated compatibility to `{ minimum: "14", verified: "14", maximum: "14" }`
+   - Updated compatibility requirements for Argon Combat HUD CORE (v5.0.1+)
 
 2. **Updated Dependencies**:
 
-   - Added TyphonJS runtime for Foundry v13 support
-   - Maintained existing Foundry VTT type definitions
+   - Bumped `@league-of-foundry-developers/foundry-vtt-types` to the v14 beta line (off the ancient `^9.280.0` pin)
+   - Removed the unused `@typhonjs-fvtt/runtime` dependency
+   - `tsconfig.json` now requires `"moduleResolution": "Bundler"`
 
-3. **Installation for v13**:
-   - Update to Foundry VTT v13
-   - Update Argon Combat HUD (CORE) to version 3.1.0 or later (tested with 4.0.x)
-   - Update EnhancedCombatHUD-Dragonbane to version 0.11.0
+3. **Dragonbane System ApplicationV2 Actor Sheets**:
+
+   - The Dragonbane system's actor sheets moved from `ActorSheet` (V1) to `HandlebarsApplicationMixin(ActorSheetV2)`, changing action-handler signatures from `(event)` to `(event, target)`. All direct sheet-method calls this module makes (e.g. `_onSkillRoll` for spellcasting) were updated to pass a target element accordingly.
+
+4. **Installation for v14**:
+   - Update to Foundry VTT v14
+   - Update Argon Combat HUD (CORE) to version 5.0.1 or later
+   - Update the Dragonbane system to v4.1.1+ (`v14` branch)
+   - Update EnhancedCombatHUD-Dragonbane to version 0.13.0
    - Run `npm install` to install new dependencies
    - Run `npm run build` to build the module
 
-See the `MIGRATION-V13.md` file for more detailed information about the v13 update.
+See the `MIGRATION-V14.md` file for more detailed information about the v14 update (and `MIGRATION-V13.md` for the prior v13 update).
 
 ## Project Structure
 
@@ -238,7 +244,7 @@ This module extends the Argon Combat HUD framework. Key integration patterns:
 ### Design Considerations
 
 - **Hard Dependency**: Requires both Argon Combat HUD (CORE) and Dragonbane system
-- **Foundry v13**: Version 0.11.0+ supports Foundry VTT v13 with TyphonJS runtime
+- **Foundry v14**: Version 0.13.0+ supports Foundry VTT v14
 - **Extension Pattern**: Builds upon Argon's architecture rather than replacing it
 
 ## Credits

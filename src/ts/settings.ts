@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from "../module.json";
+import { MODULE_NAME } from "./module-id";
 
 export function registerSettings(): void {
   game.settings.register(MODULE_NAME, "includeUnpreparedSpells", {
@@ -28,7 +28,14 @@ export function registerSettings(): void {
 
 export function registerSkillSettings(): void {
   // Load world skills to select from (just for ease of use)
-  const worldSkills: Record<string, string> = game.items
+  //
+  // `game.items` is typed as a collection of the base `Item` document
+  // shape - the Dragonbane system doesn't ship TS types, so there's no way
+  // for fvtt-types to know about the "skill" item subtype. Cast through our
+  // own `DragonbaneItem` stub type (see enhancedcombathud-dragonbane.d.ts).
+  const worldSkills: Record<string, string> = (
+    game.items as unknown as Collection<DragonbaneItem>
+  )
     .filter((i) => i.type === "skill")
     .map((i) => i.name)
     .reduce((m, skill) => {
@@ -36,7 +43,7 @@ export function registerSkillSettings(): void {
       return m;
     }, {});
 
-  ["Healing", "Persuasion", "Evade"].forEach((skill) =>
+  (["Healing", "Persuasion", "Evade"] as const).forEach((skill) =>
     game.settings.register(MODULE_NAME, `skillName${skill}`, {
       name: `${MODULE_NAME}.settings.skillName${skill}`,
       scope: "world",

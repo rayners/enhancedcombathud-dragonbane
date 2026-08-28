@@ -17,7 +17,7 @@ export default class DragonbanePortraitPanel extends ARGON.PORTRAIT
   }
 
   async _onDeathSave(event) {
-    this.actor.sheet._onDeathRoll(event);
+    this.actor.sheet._onDeathRoll(event, this.element);
   }
 
   get isDying() {

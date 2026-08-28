@@ -18,14 +18,14 @@ export default class DragonbaneRestHud extends ARGON.ButtonHud {
         // have to account for _not_ being able to rest for a stretch
         onClick: (event) =>
           this.actor.system.canRestStretch &&
-          this.actor.sheet._onRestStretch(event),
+          this.actor.sheet._onRestStretch(event, this.element),
         icon: "fas fa-chair",
       },
       {
         label: game.i18n.localize(
           "enhancedcombathud-dragonbane.buttons.shift-rest",
         ),
-        onClick: (event) => this.actor.sheet._onRestShift(event),
+        onClick: (event) => this.actor.sheet._onRestShift(event, this.element),
         icon: "fas fa-bed",
       },
     ];

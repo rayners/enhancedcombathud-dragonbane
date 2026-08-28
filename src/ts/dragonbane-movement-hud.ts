@@ -15,7 +15,8 @@ export default class DragonbaneMovementHud extends ARGON.MovementHud {
 
   get movementMax() {
     return (
-      this.actor.system.movement.value / canvas?.scene?.dimensions["distance"]
+      this.actor.system.movement.value /
+      (canvas?.scene?.dimensions?.["distance"] ?? 1)
     );
   }
 
