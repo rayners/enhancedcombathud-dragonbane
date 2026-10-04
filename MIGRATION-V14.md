@@ -12,7 +12,7 @@ This document outlines the changes made to make EnhancedCombatHUD-Dragonbane com
 
 2. **Updated Dependencies**:
 
-   - Bumped `@league-of-foundry-developers/foundry-vtt-types` from the ancient `^9.280.0` pin to the v14 beta line (`14.366.0-beta.20260825144710`) - a stable v14 release doesn't exist on npm yet, only beta prereleases matching Foundry v14 build 366
+   - Bumped `@league-of-foundry-developers/foundry-vtt-types` from the ancient `^9.280.0` pin to the v14 beta line (`14.366.0-beta.20260825144710`) - these types are only published as beta prereleases, so the beta line is the current release. The version is pinned exactly to match Foundry v14 build 366
    - Updated `tsconfig.json`'s `moduleResolution` from `Node` to `Bundler`, which the new type package requires to resolve its subpath `imports`/`exports` maps correctly
    - Removed the unused `@typhonjs-fvtt/runtime` devDependency (it was never actually imported anywhere in `src/` or `test/`)
 
@@ -48,7 +48,7 @@ This document outlines the changes made to make EnhancedCombatHUD-Dragonbane com
 If you're working with this module or extending it, please note:
 
 - `tsconfig.json` now requires `"moduleResolution": "Bundler"` for `foundry-vtt-types` to resolve correctly - do not revert this to `"Node"`.
-- The `foundry-vtt-types` v14 line is still a beta prerelease upstream (there is no stable npm release for Foundry v14 yet). Expect friction updating it further until the League of Foundry Developers cuts a stable v14 release.
+- `foundry-vtt-types` is only published as beta prereleases, so the pinned beta is the expected state, not a stopgap. The pin is exact on purpose: newer betas can change types and break typecheck, so review bumps (including Dependabot's) by running `npm run typecheck` before merging.
 - Any new call into a Dragonbane `ActorSheet` method should pass `(event, target)` per the system's `ActorSheetV2` action-handler convention, and should have its signature added to `DragonbaneActorSheet` in `src/ts/enhancedcombathud-dragonbane.d.ts`.
 - Test your extensions thoroughly with Foundry v14 and the current Dragonbane `v14` branch.
 

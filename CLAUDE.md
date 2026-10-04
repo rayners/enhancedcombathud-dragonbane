@@ -42,7 +42,7 @@ Version 14.4.0 adds support for Foundry VTT v14 with the following changes:
 
 2. **Updated Dependencies**:
 
-   - Bumped `@league-of-foundry-developers/foundry-vtt-types` to the v14 beta line (off the ancient `^9.280.0` pin)
+   - Bumped `@league-of-foundry-developers/foundry-vtt-types` to the v14 line, which is only published as betas (off the ancient `^9.280.0` pin)
    - Removed the unused `@typhonjs-fvtt/runtime` dependency
    - `tsconfig.json` now requires `"moduleResolution": "Bundler"`
 
