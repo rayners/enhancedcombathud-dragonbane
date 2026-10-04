@@ -33,7 +33,7 @@ This module provides a specialized Combat HUD (Heads-Up Display) for the Dragonb
 
 ## Foundry VTT v14 Compatibility
 
-Version 0.13.0 adds support for Foundry VTT v14 with the following changes:
+Version 14.4.0 adds support for Foundry VTT v14 with the following changes:
 
 1. **Updated Module Manifest**:
 
@@ -54,7 +54,7 @@ Version 0.13.0 adds support for Foundry VTT v14 with the following changes:
    - Update to Foundry VTT v14
    - Update Argon Combat HUD (CORE) to version 5.0.1 or later
    - Update the Dragonbane system to v4.1.1+ (`v14` branch)
-   - Update EnhancedCombatHUD-Dragonbane to version 0.13.0
+   - Update EnhancedCombatHUD-Dragonbane to version 14.4.0
    - Run `npm install` to install new dependencies
    - Run `npm run build` to build the module
 
@@ -244,7 +244,7 @@ This module extends the Argon Combat HUD framework. Key integration patterns:
 ### Design Considerations
 
 - **Hard Dependency**: Requires both Argon Combat HUD (CORE) and Dragonbane system
-- **Foundry v14**: Version 0.13.0+ supports Foundry VTT v14
+- **Foundry v14**: Version 14.4.0+ supports Foundry VTT v14
 - **Extension Pattern**: Builds upon Argon's architecture rather than replacing it
 
 ## Credits

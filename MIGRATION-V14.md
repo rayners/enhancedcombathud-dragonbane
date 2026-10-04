@@ -7,7 +7,8 @@ This document outlines the changes made to make EnhancedCombatHUD-Dragonbane com
 1. **Updated Module Manifest**:
 
    - Changed compatibility to `{ minimum: "14", verified: "14", maximum: "14" }`
-   - Updated version to 0.13.0
+   - Added minimum versions to `relationships`: Argon Combat HUD (CORE) 5.0.1 and the Dragonbane system 4.1.1
+   - Module versions now follow `<Foundry major>.<Dragonbane major>.<module release>` (this release is 14.4.0). The version is set by release-please, so don't edit it by hand.
 
 2. **Updated Dependencies**:
 
@@ -37,7 +38,7 @@ This document outlines the changes made to make EnhancedCombatHUD-Dragonbane com
    - Update to Foundry VTT v14
    - Update Argon Combat HUD (CORE) to version 5.0.1 or later (min/verified/max 14)
    - Update the Dragonbane system to a v14-compatible release (v4.1.1+, `v14` branch)
-   - Update EnhancedCombatHUD-Dragonbane to version 0.13.0
+   - Update EnhancedCombatHUD-Dragonbane to version 14.4.0
 
 2. **Known Issues**:
    - If you encounter any issues with the update, please report them on our [GitHub issues page](https://github.com/rayners/enhancedcombathud-dragonbane/issues)
