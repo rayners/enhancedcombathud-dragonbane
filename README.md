@@ -6,7 +6,7 @@ An implementation of the Argon - Combat HUD for the Dragonbane system in Foundry
 
 ## Compatibility
 
-- Foundry VTT v12-v13
+- Foundry VTT v14
 - Argon Combat HUD (CORE)
 - Dragonbane system
 

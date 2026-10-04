@@ -119,7 +119,12 @@ export default class DragonbaneDrawerPanel extends ARGON.DRAWER.DrawerPanel {
     ];
 
     skillGroups.forEach(({ group, label }) => {
-      const skillsButtons = game.items
+      // See the comment in settings.ts registerSkillSettings() for why this
+      // cast is needed: `game.items` doesn't know about Dragonbane's "skill"
+      // item subtype since the system ships no TS types.
+      const skillsButtons = (
+        game.items as unknown as Collection<DragonbaneItem>
+      )
         .filter((i) => i.type === "skill" && i.system.skillType === group)
         .filter((i) => this.actor.getSkill(i.name)?.system.value)
         .map(

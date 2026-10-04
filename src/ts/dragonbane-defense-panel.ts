@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from "../module.json";
+import { MODULE_NAME } from "./module-id";
 
 const ARGON = CONFIG.ARGON;
 
@@ -21,10 +21,13 @@ class DragonbaneMonsterDefendButton extends ARGON.MAIN.BUTTONS.ActionButton {
   }
 
   async _onLeftClick(event) {
-    this.actor.sheet._onMonsterDefend({
-      type: "click",
-      preventDefault: () => event.preventDefault(),
-    });
+    this.actor.sheet._onMonsterDefend(
+      {
+        type: "click",
+        preventDefault: () => event.preventDefault(),
+      },
+      this.element,
+    );
   }
 }
 

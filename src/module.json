@@ -6,9 +6,9 @@
   "library": "false",
   "manifestPlusVersion": "1.2.0",
   "compatibility": {
-    "minimum": 12,
-    "verified": 13,
-    "maximum": 13
+    "minimum": "14",
+    "verified": "14",
+    "maximum": "14"
   },
   "authors": [
     {
@@ -22,14 +22,14 @@
       {
         "id": "dragonbane",
         "type": "system",
-        "compatibility": {}
+        "compatibility": { "minimum": "4.1.1" }
       }
     ],
     "requires": [
       {
         "id": "enhancedcombathud",
         "type": "module",
-        "compatibility": {}
+        "compatibility": { "minimum": "5.0.1" }
       }
     ]
   },

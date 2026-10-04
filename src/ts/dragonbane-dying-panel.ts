@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from "../module.json";
+import { MODULE_NAME } from "./module-id";
 
 const ARGON = CONFIG.ARGON;
 
@@ -29,7 +29,7 @@ class DragonbaneRallySelfButton extends ARGON.MAIN.BUTTONS.ActionButton {
         ],
       });
     } else {
-      this.actor.sheet._onAttributeRoll(event);
+      this.actor.sheet._onAttributeRoll(event, this.element);
     }
   }
 

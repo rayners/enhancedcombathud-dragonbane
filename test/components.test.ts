@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import DragonbanePortraitPanel from "../src/ts/dragonbane-portrait-panel";
 import DragonbaneMovementHud from "../src/ts/dragonbane-movement-hud";
 
@@ -108,6 +108,32 @@ describe("Component Smoke Tests", () => {
       const hud = new DragonbaneMovementHud(mockActor, mockToken);
       // movement.value (10) / canvas.scene.dimensions.distance (5) = 2
       expect(hud.movementMax).toBe(2);
+    });
+
+    describe("movementMax distance fallback", () => {
+      const originalCanvas = (global as any).canvas;
+
+      afterEach(() => {
+        (global as any).canvas = originalCanvas;
+      });
+
+      it("should fall back to distance 1 when dimensions is undefined", () => {
+        (global as any).canvas = { scene: { dimensions: undefined } };
+        const hud = new DragonbaneMovementHud(mockActor, mockToken);
+        expect(hud.movementMax).toBe(10); // movement.value (10) / fallback (1)
+      });
+
+      it("should fall back to distance 1 when scene is null", () => {
+        (global as any).canvas = { scene: null };
+        const hud = new DragonbaneMovementHud(mockActor, mockToken);
+        expect(hud.movementMax).toBe(10);
+      });
+
+      it("should fall back to distance 1 when canvas itself is undefined", () => {
+        (global as any).canvas = undefined;
+        const hud = new DragonbaneMovementHud(mockActor, mockToken);
+        expect(hud.movementMax).toBe(10);
+      });
     });
 
     it("should be visible when combat is started", () => {

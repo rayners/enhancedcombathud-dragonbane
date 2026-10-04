@@ -1,4 +1,4 @@
-import { id as MODULE_NAME } from "../module.json";
+import { MODULE_NAME } from "./module-id";
 
 const ARGON = CONFIG.ARGON;
 
@@ -129,11 +129,14 @@ class DragonbaneSpellButton extends ARGON.MAIN.BUTTONS.ItemButton {
     // We're going to have to fake an event, since this is actually
     // a mouseup event instead of the expected left click (per the
     // sheet code)
-    this.actor.sheet._onSkillRoll({
-      type: "click",
-      currentTarget: this.element,
-      preventDefault: () => event.preventDefault(),
-    });
+    this.actor.sheet._onSkillRoll(
+      {
+        type: "click",
+        currentTarget: this.element,
+        preventDefault: () => event.preventDefault(),
+      },
+      this.element,
+    );
   }
 
   override async _renderInner() {
